@@ -14,41 +14,41 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/a56231a8-746e-4daa-8307-d9d385654b58";
+    { device = "/dev/disk/by-id/dm-name-crypt";
       fsType = "btrfs";
       options = [ "subvol=root" "compress=zstd" "noatime" ];
       neededForBoot = true;
     };
 
-  boot.initrd.luks.devices."crypt".device = "/dev/disk/by-uuid/5024b14a-eec1-44c8-9845-dd50b5917f3b";
+  boot.initrd.luks.devices."crypt".device = "/dev/disk/by-partlabel/luks";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/D3B1-2511";
+    { device = "/dev/disk/by-partlabel/EFI";
       fsType = "vfat";
       neededForBoot = true;
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/a56231a8-746e-4daa-8307-d9d385654b58";
+    { device = "/dev/disk/by-id/dm-name-crypt";
       fsType = "btrfs";
       options = [ "subvol=home" "compress=zstd" "noatime" ];
       neededForBoot = true;
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/a56231a8-746e-4daa-8307-d9d385654b58";
+    { device = "/dev/disk/by-id/dm-name-crypt";
       fsType = "btrfs";
       options = [ "subvol=nix" "compress=zstd" "noatime" ];
     };
 
   fileSystems."/persist" =
-    { device = "/dev/disk/by-uuid/a56231a8-746e-4daa-8307-d9d385654b58";
+    { device = "/dev/disk/by-id/dm-name-crypt";
       fsType = "btrfs";
       options = [ "subvol=persist" "compress=zstd" "noatime" ];
     };
 
   fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/a56231a8-746e-4daa-8307-d9d385654b58";
+    { device = "/dev/disk/by-id/dm-name-crypt";
       fsType = "btrfs";
       options = [ "subvol=log" "compress=zstd" "noatime" ];
       neededForBoot = true;

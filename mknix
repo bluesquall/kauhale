@@ -1,0 +1,99 @@
+#!/bin/bash
+set -e
+ghuser=bluesquall
+ghrepo=kauhale
+
+hostname=encom
+user=flynn
+uid=1982
+
+usage() {
+  echo "please specify the drive to nixify (e.g., /dev/nvme0n1)";
+}
+
+while [[ $# -gt 1 ]]; do
+  case "$1" in
+    -h | --hostname )
+      shift
+      hostname="$1"
+      ;;
+    -u | --user )
+      shift
+      user="$1"
+      ;;
+    -i | --uid )
+      shift
+      uid="$1"
+      ;;
+    *)
+      usage;
+      exit 1;
+  esac
+  shift
+done
+
+if [[ $# == 1 ]]; then
+  drive="$1";
+else
+  usage;
+  exit 1;
+fi
+
+echo "mknix with options:"
+echo "  hostname: ${hostname}"
+echo "  user: ${user}"
+echo "  uid: ${uid}"
+echo "  drive: ${drive}"
+echo ""
+echo "WARNING!"
+echo "this script will overwrite everything on ${drive}"
+echo "the current partition table on ${drive} is:"
+sgdisk --print ${drive}
+read -r -p "type ${drive} to confirm and overwrite partitions ~> " confirm
+if [[ ! ${confirm} == ${drive} ]]; then exit 1; fi
+
+sgdisk --clear ${drive}
+sgdisk --new 1:4096:2048000 --typecode 1:ef00 --change-name 1:EFI ${drive}
+sgdisk --new 2:2048001: --typecode 2:8309 --change-name 2:luks ${drive}
+sgdisk --print ${drive}
+partprobe ${drive}; sleep 2
+mkfs.vfat -n EFI /dev/disk/by-partlabel/EFI
+cryptsetup -v luksFormat /dev/disk/by-partlabel/luks
+cryptsetup open /dev/disk/by-partlabel/luks crypt
+mkfs.btrfs -f /dev/mapper/crypt
+mount -t btrfs /dev/mapper/crypt /mnt
+btrfs subvolume create /mnt/root
+btrfs subvolume create /mnt/home
+btrfs subvolume create /mnt/nix
+btrfs subvolume create /mnt/persist
+btrfs subvolume create /mnt/log
+btrfs subvolume create /mnt/swap
+btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
+umount /mnt
+mount -o subvol=root,compress=zstd,noatime /dev/mapper/crypt /mnt
+mkdir -p /mnt/boot
+mount /dev/disk/by-partlabel/EFI /mnt/boot
+mkdir -p /mnt/home
+mkdir -p /mnt/nix
+mkdir -p /mnt/persist
+mkdir -p /mnt/var/log
+mount -o subvol=home,compress=zstd,noatime /dev/mapper/crypt /mnt/home
+mount -o subvol=nix,compress=zstd,noatime /dev/mapper/crypt /mnt/nix
+mount -o subvol=persist,compress=zstd,noatime /dev/mapper/crypt /mnt/persist
+mount -o subvol=log,compress=zstd,noatime /dev/mapper/crypt /mnt/var/log
+nixos-generate-config --root /mnt
+pushd /mnt/etc/nixos
+rawmain="https://raw.githubusercontent.com/${ghuser}/${ghrepo}/main"
+curl -#SLO "${rawmain}/nixos/hardware-configuration.nix"
+curl -#SLO "${rawmain}/nixos/configuration.nix"
+popd
+sed -i "s/@HOSTNAME@/${hostname}/" /mnt/etc/nixos/configuration.nix
+sed -i "s/@USER@/${user}/" /mnt/etc/nixos/configuration.nix
+sed -i "s/@UID@/${uid}/" /mnt/etc/nixos/configuration.nix
+mkdir -p /mnt/home/.keys
+echo "set password for user $user:"
+echo "$(mkpasswd -m sha512crypt)" > /mnt/home/.keys/${user}
+chmod 700 /mnt/home/.keys
+chmod 600 /mnt/home/.keys/${user}
+mkdir -p /mnt/boot/hist && history > /mnt/boot/hist/$(date -u +%s).$user.hist
+time nixos-install --no-root-passwd # doesn't work anyway if mutableUsers=false

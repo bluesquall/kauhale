@@ -74,7 +74,7 @@ in
   };
 
   environment = {
-    systemPackages = with pkgs; [ zsh curl git mosh tmux neovim tree pass brightnessctl fish ];
+    systemPackages = with pkgs; [ zsh curl git mosh tmux neovim tree password-store brightnessctl fish ];
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";

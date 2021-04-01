@@ -4,7 +4,19 @@
 > meaning "group of houses comprising a home"
 > literally "plural house"
 
-This is my [NixOS](nixos.org) home.
+This is my [NixOS] home.
+
+## getting started
+
+0. boot into a [NixOS]
+
+1. [mknix], reboot
+
+## hit the ground running
+
+1. connect to your WiFi network: `nmcli device wifi connect <SSID> --ask`
+
+2. ...
 
 ## ramblin'
 
@@ -62,8 +74,10 @@ friend at [functor.tokyo shows us how to reference it directly][functokyo]
 in `configuration.nix` and avoid relying on external state.
 
 
-## references
 
+_____________
+
+[NixOS]: https://nixos.org
 [mknix]: https://mjstanway.com/mknix
 [mt-caret]: https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
 [eyd]: https://grahamc.com/blog/erase-your-darlings

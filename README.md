@@ -52,6 +52,12 @@ use it on my NixOS installations, but to keep the base derivation minimal I
 rely first on `uxterm` with a few customizations in `~/.Xresources` to keep
 it from blinding me with a white background.
 
+Here's the relevant line in `~/.config/i3/config`:
+
+```
+bindsym $mod+Return exec "SHELL=$HOME/.nix-profile/bin/fish uxterm"
+```
+
 ### editor
 
 Started with `vim` many years ago so that I'd be learning something I could

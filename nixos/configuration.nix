@@ -31,6 +31,8 @@ in
 
   i18n.defaultLocale = "en_US.UTF-8";
 
+  virtualization.docker.enable = true;
+
   services.xserver = {
     enable = true;
     dpi = 180;
@@ -57,7 +59,7 @@ in
       home = "/home/@USER@";
       createHome = true;
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" ]; # enable `sudo`
+      extraGroups = [ "docker" "networkmanager" "wheel" ]; # enable `sudo`
       shell = pkgs.zsh; # keep a POSIX login shell
       passwordFile = "/home/.keys/@USER@";
       # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@

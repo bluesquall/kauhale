@@ -49,7 +49,7 @@ in
     layout = "us";
     libinput.enable = true;
   };
-  
+
   users = {
     mutableUsers = false;
     users.@USER@ = {
@@ -74,7 +74,7 @@ in
   };
 
   environment = {
-    systemPackages = with pkgs; [ zsh curl git mosh tmux neovim tree ];
+    systemPackages = with pkgs; [ zsh curl git mosh tmux neovim tree pass brightnessctl ];
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";

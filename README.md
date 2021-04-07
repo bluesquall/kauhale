@@ -29,12 +29,20 @@ NixOS first.)
 
 ### to-do
 
-* test-drive [homies][homies-post]
+* test-drive [homies]
 
 * review [this post][mathiasp] on setting up a dev environment using Nix and
   decide what to apply to my approach
 
+* package [LCM] using [flakes]
+
 ## environment
+
+### dotfiles
+
+It seems like most [NixOS] users manage their dotfiles with [home-manager],
+but [homies] seems like an attractive alternative. It also looks like you
+may be able to set up something using [flakes].
 
 ### shell
 
@@ -91,3 +99,6 @@ _____________
 [mathiasp]: https://www.mathiaspolligkeit.de/dev/exploring-nix-on-macos/
 [fish-n-nix]: https://mjhart.netlify.app/posts/2020-03-14-nix-and-fish.html
 [functokyo]: https://functor.tokyo/blog/2018-02-18-install-packages-from-nixos-unstable
+[malloc47]: https://www.malloc47.com/migrating-to-nixos/
+[del-old-boot-conf]: http://blog.ielliott.io/how-to-delete-old-nixos-boot-configurations/
+[flakes]: https://www.tweag.io/blog/2020-05-25-flakes/

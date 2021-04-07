@@ -31,7 +31,7 @@ in
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  virtualization.docker.enable = true;
+  # virtualization.docker.enable = true;
 
   services.xserver = {
     enable = true;

@@ -1,0 +1,18 @@
+XTerm.termName: xterm
+XTerm*font: -*-tamzen-medium-*-*-*-16-*-*-*-*-*-*-*
+
+UXTerm*foreground: orange
+UXTerm*background: black
+
+! UXTerm*font: -*-tamzen-medium-*-*-*-16-*-*-*-*-*-*-*
+! UXTERM*font: xft:Tamzen:pixelsize=16
+
+UXTerm*renderFont: true
+!UXTerm*faceName: Deja Vu Sans Mono
+UXTerm*faceName: inconsolata
+! UXTerm*faceName: iosevka
+UXTerm*faceSize: 10
+
+Ctrl Shift <Key>C: copy-selection(CLIPBOARD)
+Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
+

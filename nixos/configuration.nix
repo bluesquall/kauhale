@@ -12,44 +12,50 @@ in
       ./hardware-configuration.nix
     ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = [ "btrfs" ];
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    supportedFilesystems = [ "btrfs" ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   # The next one requires the one after it
   hardware.enableAllFirmware = true;
   nixpkgs.config.allowUnfree = true;
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "@HOSTNAME@"; # Define your hostname.
-  networking.useDHCP = false;
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "@HOSTNAME@"; # Define your hostname.
+    useDHCP = false;
+    networkmanager.enable = true;
+    firewall.enable = false;
+  };
 
   time.timeZone = "US/Pacific";
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # virtualization.docker.enable = true;
-
-  services.xserver = {
-    enable = true;
-    dpi = 180;
-    displayManager = {
-      sddm.enable = true;
-      autoLogin = {
-        enable = true;
-        user = "@USER@";
-      };
-      defaultSession = "none+i3";
-    };
-    windowManager.i3 = {
+  services = {
+    openssh.enable = true;
+    xserver = {
       enable = true;
-      extraPackages = with pkgs; [ dmenu i3status ];
+      dpi = 180;
+      displayManager = {
+        sddm.enable = true;
+        autoLogin = {
+          enable = true;
+          user = "@USER@";
+        };
+        defaultSession = "none+i3";
+      };
+      windowManager.i3 = {
+        enable = true;
+        extraPackages = with pkgs; [ dmenu i3status ];
+      };
+      layout = "us";
+      libinput.enable = true;
     };
-    layout = "us";
-    libinput.enable = true;
   };
 
   users = {
@@ -59,7 +65,7 @@ in
       home = "/home/@USER@";
       createHome = true;
       isNormalUser = true;
-      extraGroups = [ "docker" "networkmanager" "wheel" ]; # enable `sudo`
+      extraGroups = [ "networkmanager" "wheel" ]; # enable `sudo`
       shell = pkgs.zsh; # keep a POSIX login shell
       passwordFile = "/home/.keys/@USER@";
       # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@
@@ -84,32 +90,24 @@ in
     };
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
+  fonts.fonts = with pkgs; [
+    dejavu_fonts
+    inconsolata
+    iosevka
+    monoid
+    noto-fonts
+    noto-fonts-extra
+    noto-fonts-emoji
+    # tamsyn
+    tamzen
+  ];
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "20.09";
 
 }
 

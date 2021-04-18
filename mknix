@@ -101,5 +101,5 @@ echo "set password for user $user:"
 echo "$(mkpasswd -m sha512crypt)" > /mnt/home/.keys/${user}
 chmod 700 /mnt/home/.keys
 chmod 600 /mnt/home/.keys/${user}
-sed -i '/^      openssh.authorizedKeys.keys = \[$/r'<(curl -sSL ${pubkeys} | sed 's/^/        "/' | sed 's/$/"/') nixos/configuration.nix
+sed -i '/^      openssh.authorizedKeys.keys = \[$/r'<(curl -sSL ${pubkeys} | sed 's/^/        "/' | sed 's/$/"/') /mnt/etc/nixos/configuration.nix
 time nixos-install --no-root-passwd # doesn't work anyway if mutableUsers=false

@@ -6,6 +6,7 @@ ghrepo=kauhale
 hostname=encom
 user=flynn
 uid=1982
+pubkeys="https://en.com/flynn/pubkeys"
 
 usage() {
   echo "please specify the drive to nixify (e.g., /dev/nvme0n1)";
@@ -25,6 +26,10 @@ while [[ $# -gt 1 ]]; do
       shift
       uid="$1"
       ;;
+    -k | --pubkeys )
+      shift
+      pubkeys="$1"
+      ;;
     *)
       usage;
       exit 1;
@@ -43,6 +48,7 @@ echo "mknix with options:"
 echo "  hostname: ${hostname}"
 echo "  user: ${user}"
 echo "  uid: ${uid}"
+echo "  pubkeys: ${pubkeys}"
 echo "  drive: ${drive}"
 echo ""
 echo "WARNING!"
@@ -95,4 +101,5 @@ echo "set password for user $user:"
 echo "$(mkpasswd -m sha512crypt)" > /mnt/home/.keys/${user}
 chmod 700 /mnt/home/.keys
 chmod 600 /mnt/home/.keys/${user}
+sed -i '/^      openssh.authorizedKeys.keys = \[$/r'<(curl -sSL ${pubkeys} | sed 's/^/        "/' | sed 's/$/"/') nixos/configuration.nix
 time nixos-install --no-root-passwd # doesn't work anyway if mutableUsers=false

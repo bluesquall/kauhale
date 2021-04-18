@@ -58,21 +58,7 @@ in
     };
   };
 
-  users = {
-    mutableUsers = false;
-    users.@USER@ = {
-      uid = @UID@;
-      home = "/home/@USER@";
-      createHome = true;
-      isNormalUser = true;
-      extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
-      shell = pkgs.zsh; # keep a POSIX login shell
-      passwordFile = "/home/.keys/@USER@";
-      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@
-      openssh.authorizedKeys.keys = [
-      ];
-    };
-  };
+  virtualisation.docker.enable = true;
 
   nixpkgs.config = {
     packageOverrides = pkgs: {
@@ -83,7 +69,7 @@ in
   };
 
   environment = {
-    systemPackages = with pkgs; [ zsh curl git tmux neovim brightnessctl docker ];
+    systemPackages = with pkgs; [ zsh curl git tmux neovim brightnessctl podman docker ];
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -107,6 +93,23 @@ in
     enable = true;
     enableSSHSupport = true;
   };
+
+  users = {
+    mutableUsers = false;
+    users.@USER@ = {
+      uid = @UID@;
+      home = "/home/@USER@";
+      createHome = true;
+      isNormalUser = true;
+      extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
+      shell = pkgs.zsh; # keep a POSIX login shell
+      passwordFile = "/home/.keys/@USER@";
+      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@
+      openssh.authorizedKeys.keys = [
+      ];
+    };
+  };
+
 
   system.stateVersion = "20.09";
 

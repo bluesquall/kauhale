@@ -65,11 +65,12 @@ in
       home = "/home/@USER@";
       createHome = true;
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" ]; # enable `sudo`
+      extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
       shell = pkgs.zsh; # keep a POSIX login shell
       passwordFile = "/home/.keys/@USER@";
       # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@
-      openssh.authorizedKeys.keys = [ "" ];
+      openssh.authorizedKeys.keys = [
+      ];
     };
   };
 

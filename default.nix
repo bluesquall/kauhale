@@ -1,6 +1,5 @@
-let pkgs = import <nixpkgs> {};
-
 let
+  pkgs = import <nixpkgs> {};
   kauhale = [
     fish
     git

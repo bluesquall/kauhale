@@ -58,7 +58,10 @@ in
     };
   };
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    podman.enable = true;
+  };
 
   nixpkgs.config = {
     packageOverrides = pkgs: {
@@ -69,7 +72,7 @@ in
   };
 
   environment = {
-    systemPackages = with pkgs; [ zsh curl git tmux neovim brightnessctl podman docker ];
+    systemPackages = with pkgs; [ curl git neovim brightnessctl ];
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -89,9 +92,27 @@ in
     tamzen
   ];
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
+  programs = {
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    less.enable = true;
+    # neovim module merged 2020-09, available in unstable channel
+    # neovim = {
+    #   enable = true;
+    #   viAlias = true;
+    #   vimAlias = true;
+    # };
+    tmux = {
+      enable = true;
+      clock24 = true;
+      keyMode = "vi";
+    };
+    zsh = {
+      enable = true;
+      syntaxHighlighting.enable = true;
+    };
   };
 
   users = {

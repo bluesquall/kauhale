@@ -15,7 +15,7 @@
 
   programs.bash = {
     enable = true;
-    shelloptions = [ "autocd" "globstar" "extglob"];
+    shellOptions = [ "autocd" "globstar" "extglob"];
   };
 
   programs.direnv = {
@@ -68,7 +68,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    defaultKeymap = "vi";
+    defaultKeymap = "vicmd";
     dotDir = ".config/zsh";
   };
   

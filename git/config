@@ -1,5 +1,6 @@
 [core]
   editor = nvim
+  excludesfile = @GITIGNORE@
 [user]
   name = M J Stanway
 [alias]

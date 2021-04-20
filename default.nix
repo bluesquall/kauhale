@@ -19,7 +19,8 @@ let
 
 #  fish = import ./fish (with pkgs; { inherit makeWrapper symlinkJoin writeText; fish = pkgs.fish; });
   fish = pkgs.fish;
-  git = import ./git ({ inherit (pkgs) sources runCommand makeWrapper symlinkJoin writeTextFile; git = pkgs.git; });
+#  git = import ./git ({ inherit (pkgs) sources runCommand makeWrapper symlinkJoin writeTextFile; git = pkgs.git; });
+  git = pkgs.git;
   i3 = pkgs.i3;
   nvim = pkgs.neovim;
   tmux = import ./tmux (with pkgs; { inherit makeWrapper symlinkJoin writeText; tmux = pkgs.tmux; });

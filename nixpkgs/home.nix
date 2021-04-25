@@ -84,8 +84,27 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    envExtra = ''
+      typeset -U path
+      path=(~/bin ~/.local/bin /$path[@])
+    '';
+
     defaultKeymap = "vicmd";
     dotDir = ".config/zsh";
+    shellAliases = {
+      mbsync = 'mbsync -c "$XDG_CONFIG_HOME"/isync/mbsyncrc';
+    };
+    sessionVariables = {
+      LCM_DEFAULT_URL=udpm://239.255.76.67:7667?ttl=1
+      PASSWORD_STORE_DIR="$XDG_CONFIG_HOME/pass"
+      PASSWORD_STORE_CHARACTER_SET="[:alnum:] %&_?#=-"
+      XDG_CONFIG_HOME="$HOME/.config"
+      XDG_CACHE_HOME="$HOME/.cache"
+      GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
+      # GPG_TTY=$(tty)
+      # SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    };
+
   };
   
   services = {

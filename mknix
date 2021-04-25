@@ -89,6 +89,7 @@ mount -o subvol=persist,compress=zstd,noatime /dev/mapper/crypt /mnt/persist
 mount -o subvol=log,compress=zstd,noatime /dev/mapper/crypt /mnt/var/log
 nixos-generate-config --root /mnt
 pushd /mnt/etc/nixos
+# here is where we'd substitute CL args into settings.nix
 rawmain="https://raw.githubusercontent.com/${ghuser}/${ghrepo}/main"
 curl -#SLO "${rawmain}/nixos/hardware-configuration.nix"
 curl -#SLO "${rawmain}/nixos/configuration.nix"

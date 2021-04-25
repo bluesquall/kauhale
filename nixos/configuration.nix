@@ -7,10 +7,25 @@
 let unstableTarball = fetchTarball https://github.com/NixOS/nikpkgs-channels/archive/nixos-unstable.tar.gz;
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        unstable = import unstableTarball {
+          config = config.nixpkgs.config;
+        };
+      };
+    };
+    # overlays = [];
+  };
+
+
+  imports = [
+    ./hardware-configuration.nix
+    ../settings.nix
+    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
+  ];
+
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -21,12 +36,10 @@ in
     };
   };
 
-  # The next one requires the one after it
   hardware.enableAllFirmware = true;
-  nixpkgs.config.allowUnfree = true;
 
   networking = {
-    hostName = "@HOSTNAME@"; # Define your hostname.
+    hostName = {config.settings.hostname};
     useDHCP = false;
     networkmanager.enable = true;
     firewall.enable = false;
@@ -45,7 +58,7 @@ in
         sddm.enable = true;
         autoLogin = {
           enable = true;
-          user = "@USER@";
+          user = {config.settings.username};
         };
         defaultSession = "none+i3";
       };
@@ -60,29 +73,9 @@ in
 
   virtualisation.docker.enable = true;
 
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
+  environment.systemPackages = with pkgs; [ zsh curl ];
 
-  environment = {
-    systemPackages = with pkgs; [ zsh curl ];
-  };
-
-  fonts.fonts = with pkgs; [
-    dejavu_fonts
-    inconsolata
-    # iosevka
-    # monoid
-    # noto-fonts
-    # noto-fonts-extra
-    # noto-fonts-emoji
-    # tamsyn
-    # tamzen
-  ];
+  fonts.fonts = with pkgs; [ dejavu_fonts inconsolata ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -91,20 +84,20 @@ in
 
   users = {
     mutableUsers = false;
-    users.@USER@ = {
-      uid = @UID@;
-      home = "/home/@USER@";
+    users.${config.settings.username}= {
+      uid = ${config.settings.uid};
       createHome = true;
       isNormalUser = true;
       extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
       shell = pkgs.zsh; # keep a POSIX login shell
-      passwordFile = "/home/.keys/@USER@";
-      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@
+      passwordFile = "/home/.keys/{config.settings.username}";
+      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/{config.settings.username}
       openssh.authorizedKeys.keys = [
       ];
     };
   };
 
+  home-manager.users.${config.settings.username} = import ../nixpkgs/home.nix;
 
   system.stateVersion = "20.09";
 

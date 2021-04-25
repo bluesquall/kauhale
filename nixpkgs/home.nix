@@ -3,6 +3,8 @@
 {
   programs.home-manager.enable = true;
 
+  imports = [ ../settings.nix ];
+
   home = {
     sessionVariables = {
       PAGER = "less";
@@ -14,13 +16,6 @@
       source = "../.Xresources";
       target = ".Xresources";
     };
-    file."i3" = {
-      source = "../i3";
-      target = "./config/i3";
-      recursive = true;
-    };
-
-
   };
 
   programs.bash = {
@@ -81,6 +76,13 @@
     };
   };
 
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    extraConfig = builtins.readFile ../nvim/init.vim;
+  }
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -104,7 +106,6 @@
       # GPG_TTY=$(tty)
       # SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
     };
-
   };
   
   services = {
@@ -112,6 +113,19 @@
       enable = true;
       enableSshSupport = true;
     };
+  };
 
+  xdg.configFile."i3" = {
+    source = "../i3";
+    recursive = true;
+  };
+
+  xsession = {
+    enable = true;
+    windowManager.i3 = {
+      enable = true;
+      package = pkgs.i3-gaps;
+    };
+    scriptPath = ".hm-xsession";
   };
 }

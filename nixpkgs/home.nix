@@ -53,6 +53,10 @@
     enable = true;
     userName = "M J Stanway";
     ignores = [ "*~" "*.swp" "*.pyc" "*.o" ".DS_Store" ];
+    aliases = {
+      st = "status";
+      graph = "log --graph --abbrev-commit --decorate --date=relative --all";
+    };
     extraConfig = {
       core = {
         editor = "nvim";
@@ -60,8 +64,10 @@
       url = {
         "git@github.com" = { insteadOf = "https://github.com/"; };
         "git@gitlab.com" = { insteadOf = "https://gitlab.com/"; };
+        "git@bitbucket.org" = { insteadOf = "https://bitbucket.org/"; };
       };
       pull.rebase = true;
+      push.simple = true;
     };
   };
 

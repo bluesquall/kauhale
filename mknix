@@ -90,8 +90,10 @@ mount -o subvol=log,compress=zstd,noatime /dev/mapper/crypt /mnt/var/log
 nixos-generate-config --root /mnt
 pushd /mnt/etc/nixos
 rawmain="https://raw.githubusercontent.com/${ghuser}/${ghrepo}/main"
-curl -#SLO "${rawmain}/nixos/hardware-configuration.nix"
+curl -#SLO "${rawmain}/nixos/hardware.nix"
+curl -#SLO "${rawmain}/nixos/filesystems.nix"
 curl -#SLO "${rawmain}/nixos/configuration.nix"
+# at some point, it's simpler to just clone the whole repo
 popd
 sed -i "s/@HOSTNAME@/${hostname}/" /mnt/etc/nixos/configuration.nix
 sed -i "s/@USER@/${user}/" /mnt/etc/nixos/configuration.nix

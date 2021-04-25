@@ -4,13 +4,23 @@
   programs.home-manager.enable = true;
 
   home = {
-    packages = with pkgs; [ tree ];
     sessionVariables = {
       PAGER = "less";
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
-    # file.".Xresources".source = ../.Xresources;
+    packages = with pkgs; [ brightnessctl curl docker less podman tree ];
+    file.".Xresources" = {
+      source = "../.Xresources";
+      target = ".Xresources";
+    };
+    file."i3" = {
+      source = "../i3";
+      target = "./config/i3";
+      recursive = true;
+    };
+
+
   };
 
   programs.bash = {

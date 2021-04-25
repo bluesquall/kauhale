@@ -69,24 +69,19 @@ in
   };
 
   environment = {
-    systemPackages = with pkgs; [ zsh curl git tmux neovim brightnessctl podman docker ];
-    variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-      PAGER = "less";
-    };
+    systemPackages = with pkgs; [ zsh curl ];
   };
 
   fonts.fonts = with pkgs; [
     dejavu_fonts
     inconsolata
-    iosevka
-    monoid
-    noto-fonts
-    noto-fonts-extra
-    noto-fonts-emoji
+    # iosevka
+    # monoid
+    # noto-fonts
+    # noto-fonts-extra
+    # noto-fonts-emoji
     # tamsyn
-    tamzen
+    # tamzen
   ];
 
   programs.gnupg.agent = {

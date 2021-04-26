@@ -10,6 +10,7 @@ in
   imports = [
       ./hardware.nix
       ./filesystems.nix
+      @CPU@
     ];
 
   boot = {
@@ -20,10 +21,6 @@ in
       efi.canTouchEfiVariables = true;
     };
   };
-
-  # The next one requires the one after it
-  hardware.enableAllFirmware = true;
-  nixpkgs.config.allowUnfree = true;
 
   networking = {
     hostName = "@HOSTNAME@"; # Define your hostname.
@@ -41,6 +38,10 @@ in
     xserver = {
       enable = true;
       dpi = 180;
+      layout = "us";
+      libinput.enable = true;
+      videoDrivers = [ "amdgpu" "radeon" "nvidia" "vesa" "modesetting" ];
+      # ^ These are tried in order until finding one that supports the GPU.
       displayManager = {
         sddm.enable = true;
         autoLogin = {
@@ -53,8 +54,6 @@ in
         enable = true;
         extraPackages = with pkgs; [ dmenu i3status ];
       };
-      layout = "us";
-      libinput.enable = true;
     };
   };
 

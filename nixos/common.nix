@@ -1,17 +1,22 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
-let unstableTarball = fetchTarball https://github.com/NixOS/nikpkgs-channels/archive/nixos-unstable.tar.gz;
+let
+  unstableTarball = fetchTarball https://github.com/NixOS/nikpkgs-channels/archive/nixos-unstable.tar.gz;
 in
 {
   imports = [
-      ./hardware.nix
-      ./filesystems.nix
-      @CPU@
-    ];
+    ./args.nix
+    ./filesystems.nix
+    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
+  ];
+
+  nixpkgs.config = {
+    packageOverrides = pkgs: {
+      unstable = import unstableTarball {
+        config = config.nixpkgs.config;
+      };
+    };
+  };
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -23,7 +28,7 @@ in
   };
 
   networking = {
-    hostName = "@HOSTNAME@"; # Define your hostname.
+    hostName = ${config.args.hostname};
     useDHCP = false;
     networkmanager.enable = true;
     firewall.enable = false;
@@ -46,7 +51,7 @@ in
         sddm.enable = true;
         autoLogin = {
           enable = true;
-          user = "@USER@";
+          user = ${config.args.username};
         };
         defaultSession = "none+i3";
       };
@@ -59,53 +64,28 @@ in
 
   virtualisation.docker.enable = true;
 
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
+  environment.systemPackages = with pkgs; [ bash curl zsh ];
 
-  environment = {
-    systemPackages = with pkgs; [ zsh curl ];
-  };
+  fonts.fonts = with pkgs; [ dejavu_fonts inconsolata ];
 
-  fonts.fonts = with pkgs; [
-    dejavu_fonts
-    inconsolata
-    # iosevka
-    # monoid
-    # noto-fonts
-    # noto-fonts-extra
-    # noto-fonts-emoji
-    # tamsyn
-    # tamzen
-  ];
-
-  programs.gnupg.agent = {
+  programs.gnupg.agent = { # <--TODO: enable in home-manager instead?
     enable = true;
     enableSSHSupport = true;
   };
 
   users = {
     mutableUsers = false;
-    users.@USER@ = {
-      uid = @UID@;
-      home = "/home/@USER@";
+    users.${config.args.username} = {
+      uid = ${config.args.uid};
       createHome = true;
       isNormalUser = true;
       extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
       shell = pkgs.zsh; # keep a POSIX login shell
-      passwordFile = "/home/.keys/@USER@";
-      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@
-      openssh.authorizedKeys.keys = [
-      ];
+      passwordFile = "/home/.keys/${config.args.username}";
+      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/${config.args.username}
+      openssh.authorizedKeys.keys = ${config.args.pubkeys};
     };
   };
 
-
   system.stateVersion = "20.09";
-
 }
-

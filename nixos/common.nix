@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, modulesPath, ... }:
 
 let
   unstableTarball = fetchTarball https://github.com/NixOS/nikpkgs-channels/archive/nixos-unstable.tar.gz;
@@ -7,16 +7,20 @@ in
   imports = [
     ./args.nix
     ./filesystems.nix
+    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
   ];
 
   nixpkgs.config = {
+    allowUnfree = true;
     packageOverrides = pkgs: {
       unstable = import unstableTarball {
         config = config.nixpkgs.config;
       };
     };
   };
+
+  hardware.enableAllFirmware = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

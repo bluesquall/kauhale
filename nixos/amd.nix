@@ -3,7 +3,8 @@
 {
   imports = [ ./args.nix ./common.nix ];
 
-  boot.initrd.kernelModules = [ "amdgpu" ]
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   hardware = {
     cpu.amd.updateMicrocode = true;
@@ -13,4 +14,6 @@
       extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
     };
   };
+
+  services.xserver.videoDrivers = [ "amdgpu" "radeon" "vesa" "modesetting" ];
 }

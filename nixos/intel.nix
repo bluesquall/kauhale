@@ -10,4 +10,6 @@
   };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  services.xserver.videoDrivers = [ "vesa" "modesetting" ];
 }

@@ -11,7 +11,7 @@ with lib; { options = { args = {
   };
   uid = mkOption {
     default = 1982;
-    type = with types.int;
+    type = types.int;
   };
   email = mkOption {
     default = "flynn@en.com";

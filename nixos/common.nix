@@ -8,7 +8,7 @@ in
     ./args.nix
     ./filesystems.nix
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
+    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-20.09.tar.gz}/nixos"
   ];
 
   nixpkgs.config = {
@@ -32,7 +32,7 @@ in
   };
 
   networking = {
-    hostName = ${config.args.hostname};
+    hostName = config.hostname;
     useDHCP = false;
     networkmanager.enable = true;
     firewall.enable = false;
@@ -49,8 +49,6 @@ in
       dpi = 180;
       layout = "us";
       libinput.enable = true;
-      videoDrivers = [ "amdgpu" "radeon" "nvidia" "vesa" "modesetting" ];
-      # ^ These are tried in order until finding one that supports the GPU.
       displayManager = {
         sddm.enable = true;
         autoLogin = {
@@ -79,15 +77,15 @@ in
 
   users = {
     mutableUsers = false;
-    users.${config.args.username} = {
-      uid = ${config.args.uid};
+    users.${config.username} = {
+      uid = config.uid;
       createHome = true;
       isNormalUser = true;
       extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
       shell = pkgs.zsh; # keep a POSIX login shell
-      passwordFile = "/home/.keys/${config.args.username}";
-      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/${config.args.username}
-      openssh.authorizedKeys.keys = ${config.args.pubkeys};
+      passwordFile = "/home/.keys/${config.username}";
+      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/config.username
+      openssh.authorizedKeys.keys = [ ];
     };
   };
 

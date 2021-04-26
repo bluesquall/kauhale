@@ -16,7 +16,7 @@
     };
     file."i3" = {
       source = ../i3;
-      target = "./config/i3";
+      target = "./.config/i3";
       recursive = true;
     };
 

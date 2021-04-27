@@ -19,8 +19,6 @@
       target = "./.config/i3";
       recursive = true;
     };
-
-
   };
 
   programs.bash = {
@@ -41,10 +39,10 @@
         name = "foreign-env";
         src = pkgs.fetchFromGitHub {
           owner = "oh-my-fish";
-	  repo = "plugin-foreign-env";
+          repo = "plugin-foreign-env";
           rev = "dddd9213272a0ab848d474d0cbde12ad034e65bc";
           sha256 = "00xqlyl3lffc5l0viin1nyp819wf81fncqyz87jx8ljjdhilmgbs";
-	};
+        };
       }
     ];
     loginShellInit = ''
@@ -99,12 +97,9 @@
       XDG_CONFIG_HOME = "$HOME/.config";
       XDG_CACHE_HOME = "$HOME/.cache";
       GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
-      # GPG_TTY=$(tty);
-      # SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
     };
-
   };
-  
+
   services = {
     gpg-agent = {
       enable = true;

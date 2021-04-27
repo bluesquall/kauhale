@@ -1,14 +1,15 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 let
-  username = "flynn";
-  uid = 1982;
-  hostname = "encom";
+  USERNAME = "flynn";
+  UID = 1982;
+  HOSTNAME = "encom";
 in
 {
   imports = [
     ./filesystems.nix
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-20.09.tar.gz}/nixos"
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -36,7 +37,7 @@ in
   };
 
   networking = {
-    hostName = hostname;
+    hostName = HOSTNAME;
     useDHCP = false;
     networkmanager.enable = true;
     firewall.enable = false;
@@ -59,7 +60,7 @@ in
         sddm.enable = true;
         autoLogin = {
           enable = true;
-          user = username;
+          user = USERNAME;
         };
         defaultSession = "none+i3";
       };
@@ -78,18 +79,20 @@ in
 
   users = {
     mutableUsers = false;
-    users.${username} = {
-      uid = uid;
-      home = "/home/${username}";
+    users.${USERNAME} = {
+      uid = UID;
+      home = "/home/${USERNAME}";
       createHome = true;
       isNormalUser = true;
       extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
       shell = pkgs.zsh; # keep a POSIX login shell
-      passwordFile = "/home/.keys/${username}"; # <<=== echo "$(mkpasswd -m sha512crypt)" > /home/.keys/${username}
+      passwordFile = "/home/.keys/${USERNAME}"; # <<=== echo "$(mkpasswd -m sha512crypt)" > /home/.keys/${USERNAME}
       openssh.authorizedKeys.keys = [
       ];
     };
   };
+
+  home-manager.users.${USERNAME} = import ./home.nix;
 
   system.stateVersion = "20.09";
 }

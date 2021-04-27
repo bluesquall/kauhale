@@ -1,18 +1,33 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+{ config, lib, pkgs, modulesPath, ... }:
 
-{ config, pkgs, ... }:
-
-let unstableTarball = fetchTarball https://github.com/NixOS/nikpkgs-channels/archive/nixos-unstable.tar.gz;
+let
+  USERNAME = "flynn";
+  UID = 1982;
+  HOSTNAME = "encom";
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./filesystems.nix
+    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-20.09.tar.gz}/nixos"
+  ];
+
+  nixpkgs.config.allowUnfree = true;
+
+  hardware = {
+    enableAllFirmware = true;
+    cpu.amd.updateMicrocode = true;
+    cpu.intel.updateMicrocode = true;
+    opengl = {
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
+    };
+  };
 
   boot = {
+    initrd.kernelModules = [ "amdgpu" ];
+    kernelModules = [ "kvm-amd" "kvm-intel" ];
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "btrfs" ];
     loader = {
@@ -21,12 +36,8 @@ in
     };
   };
 
-  # The next one requires the one after it
-  hardware.enableAllFirmware = true;
-  nixpkgs.config.allowUnfree = true;
-
   networking = {
-    hostName = "@HOSTNAME@"; # Define your hostname.
+    hostName = HOSTNAME;
     useDHCP = false;
     networkmanager.enable = true;
     firewall.enable = false;
@@ -41,11 +52,15 @@ in
     xserver = {
       enable = true;
       dpi = 180;
+      layout = "us";
+      libinput.enable = true;
+      videoDrivers = [ "amdgpu" "radeon" "nvidia" "vesa" "modesetting" ];
+      # ^ These are tried in order until finding one that supports the GPU.
       displayManager = {
         sddm.enable = true;
         autoLogin = {
           enable = true;
-          user = "@USER@";
+          user = USERNAME;
         };
         defaultSession = "none+i3";
       };
@@ -53,65 +68,31 @@ in
         enable = true;
         extraPackages = with pkgs; [ dmenu i3status ];
       };
-      layout = "us";
-      libinput.enable = true;
     };
   };
 
   virtualisation.docker.enable = true;
 
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
+  environment.systemPackages = with pkgs; [ bash curl zsh ];
 
-  environment = {
-    systemPackages = with pkgs; [ zsh curl git tmux neovim brightnessctl podman docker ];
-    variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-      PAGER = "less";
-    };
-  };
-
-  fonts.fonts = with pkgs; [
-    dejavu_fonts
-    inconsolata
-    iosevka
-    monoid
-    noto-fonts
-    noto-fonts-extra
-    noto-fonts-emoji
-    # tamsyn
-    tamzen
-  ];
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
+  fonts.fonts = with pkgs; [ dejavu_fonts inconsolata ];
 
   users = {
     mutableUsers = false;
-    users.@USER@ = {
-      uid = @UID@;
-      home = "/home/@USER@";
+    users.${USERNAME} = {
+      uid = UID;
+      home = "/home/${USERNAME}";
       createHome = true;
       isNormalUser = true;
       extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
       shell = pkgs.zsh; # keep a POSIX login shell
-      passwordFile = "/home/.keys/@USER@";
-      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@
+      passwordFile = "/home/.keys/${USERNAME}"; # <<=== echo "$(mkpasswd -m sha512crypt)" > /home/.keys/${USERNAME}
       openssh.authorizedKeys.keys = [
       ];
     };
   };
 
+  home-manager.users.${USERNAME} = import ./home.nix;
 
   system.stateVersion = "20.09";
-
 }
-

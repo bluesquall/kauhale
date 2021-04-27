@@ -92,7 +92,7 @@ in
     };
   };
 
-  home-manager.users.${USERNAME} = import ./home.nix;
+  # home-manager.users.${USERNAME} = import ./home.nix;
 
   system.stateVersion = "20.09";
 }

@@ -87,21 +87,19 @@ mount -o subvol=home,compress=zstd,noatime /dev/mapper/crypt /mnt/home
 mount -o subvol=nix,compress=zstd,noatime /dev/mapper/crypt /mnt/nix
 mount -o subvol=persist,compress=zstd,noatime /dev/mapper/crypt /mnt/persist
 mount -o subvol=log,compress=zstd,noatime /dev/mapper/crypt /mnt/var/log
-nixos-generate-config --root /mnt
+mkdir -p /mnt/etc/nixos
 pushd /mnt/etc/nixos
 rawmain="https://raw.githubusercontent.com/${ghuser}/${ghrepo}/main"
-curl -#SLO "${rawmain}/nixos/hardware.nix"
 curl -#SLO "${rawmain}/nixos/filesystems.nix"
 curl -#SLO "${rawmain}/nixos/configuration.nix"
-# at some point, it's simpler to just clone the whole repo
 popd
-sed -i "s/@HOSTNAME@/${hostname}/" /mnt/etc/nixos/configuration.nix
-sed -i "s/@USER@/${user}/" /mnt/etc/nixos/configuration.nix
-sed -i "s/@UID@/${uid}/" /mnt/etc/nixos/configuration.nix
+sed -i "s/encom/${hostname}/" /mnt/etc/nixos/configuration.nix
+sed -i "s/flynn/${user}/" /mnt/etc/nixos/configuration.nix
+sed -i "s/1982/${uid}/" /mnt/etc/nixos/configuration.nix
 mkdir -p /mnt/home/.keys
 echo "set password for user $user:"
 echo "$(mkpasswd -m sha512crypt)" > /mnt/home/.keys/${user}
 chmod 700 /mnt/home/.keys
 chmod 600 /mnt/home/.keys/${user}
-sed -i '/^      openssh.authorizedKeys.keys = \[$/r'<(curl -sSL ${pubkeys} | sed 's/^/        "/' | sed 's/$/"/') /mnt/etc/nixos/configuration.nix
+#sed -i '/^      openssh.authorizedKeys.keys = \[$/r'<(curl -sSL ${pubkeys} | sed 's/^/        "/' | sed 's/$/"/') /mnt/etc/nixos/configuration.nix
 time nixos-install --no-root-passwd # doesn't work anyway if mutableUsers=false

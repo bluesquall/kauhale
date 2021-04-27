@@ -1,19 +1,32 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+{ config, lib, pkgs, modulesPath, ... }:
 
-{ config, pkgs, ... }:
-
-let unstableTarball = fetchTarball https://github.com/NixOS/nikpkgs-channels/archive/nixos-unstable.tar.gz;
+let
+  username = "flynn";
+  uid = 1982;
+  hostname = "encom";
 in
 {
   imports = [
-      ./hardware.nix
-      ./filesystems.nix
-      @CPU@
-    ];
+    ./filesystems.nix
+    <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+  ];
+
+  nixpkgs.config.allowUnfree = true;
+
+  hardware = {
+    enableAllFirmware = true;
+    cpu.amd.updateMicrocode = true;
+    cpu.intel.updateMicrocode = true;
+    opengl = {
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
+    };
+  };
 
   boot = {
+    initrd.kernelModules = [ "amdgpu" ];
+    kernelModules = [ "kvm-amd" "kvm-intel" ];
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "btrfs" ];
     loader = {
@@ -23,7 +36,7 @@ in
   };
 
   networking = {
-    hostName = "@HOSTNAME@"; # Define your hostname.
+    hostName = hostname;
     useDHCP = false;
     networkmanager.enable = true;
     firewall.enable = false;
@@ -46,7 +59,7 @@ in
         sddm.enable = true;
         autoLogin = {
           enable = true;
-          user = "@USER@";
+          user = username;
         };
         defaultSession = "none+i3";
       };
@@ -59,29 +72,9 @@ in
 
   virtualisation.docker.enable = true;
 
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
+  environment.systemPackages = with pkgs; [ bash curl zsh ];
 
-  environment = {
-    systemPackages = with pkgs; [ zsh curl ];
-  };
-
-  fonts.fonts = with pkgs; [
-    dejavu_fonts
-    inconsolata
-    # iosevka
-    # monoid
-    # noto-fonts
-    # noto-fonts-extra
-    # noto-fonts-emoji
-    # tamsyn
-    # tamzen
-  ];
+  fonts.fonts = with pkgs; [ dejavu_fonts inconsolata ];
 
   programs.gnupg.agent = {
     enable = true;
@@ -90,22 +83,18 @@ in
 
   users = {
     mutableUsers = false;
-    users.@USER@ = {
-      uid = @UID@;
-      home = "/home/@USER@";
+    users.${username} = {
+      uid = uid;
+      home = "/home/${username}";
       createHome = true;
       isNormalUser = true;
       extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
       shell = pkgs.zsh; # keep a POSIX login shell
-      passwordFile = "/home/.keys/@USER@";
-      # ^ echo "$(mkpasswd -m sha512crypt)" > /home/.keys/@USER@
+      passwordFile = "/home/.keys/${username}"; # <<=== echo "$(mkpasswd -m sha512crypt)" > /home/.keys/${username}
       openssh.authorizedKeys.keys = [
       ];
     };
   };
 
-
   system.stateVersion = "20.09";
-
 }
-

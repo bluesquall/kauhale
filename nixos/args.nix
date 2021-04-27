@@ -1,6 +1,6 @@
 {config, pkgs, lib, ...}:
 
-with lib; { options = { args = {
+with lib; { options = {
   name = mkOption {
     default = "Kevin Flynn";
     type = with types; uniq string;
@@ -24,4 +24,4 @@ with lib; { options = { args = {
   pubKeysUrl = mkOption {
     default = "https://en.com/flynn/pubkeys";
   };
-}; }; }
+}; }

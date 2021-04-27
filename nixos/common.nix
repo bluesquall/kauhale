@@ -1,8 +1,5 @@
 { config, lib, pkgs, modulesPath, ... }:
 
-let
-  unstableTarball = fetchTarball https://github.com/NixOS/nikpkgs-channels/archive/nixos-unstable.tar.gz;
-in
 {
   imports = [
     ./args.nix
@@ -11,14 +8,7 @@ in
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-20.09.tar.gz}/nixos"
   ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
 
   hardware.enableAllFirmware = true;
 
@@ -53,7 +43,7 @@ in
         sddm.enable = true;
         autoLogin = {
           enable = true;
-          user = ${config.args.username};
+          user = config.username;
         };
         defaultSession = "none+i3";
       };

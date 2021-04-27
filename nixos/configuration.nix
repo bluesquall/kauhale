@@ -76,11 +76,6 @@ in
 
   fonts.fonts = with pkgs; [ dejavu_fonts inconsolata ];
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
   users = {
     mutableUsers = false;
     users.${username} = {

@@ -3,16 +3,35 @@
 {
   programs.home-manager.enable = true;
 
+  fonts.fontconfig.enable = true;
+
   home = {
     sessionVariables = {
       PAGER = "less";
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
-    packages = with pkgs; [ brightnessctl curl docker less podman tree ];
+    packages = with pkgs; [
+      brightnessctl
+      curl
+      dejavu_fonts 
+      docker
+      inconsolata
+      less
+      podman
+      tree
+    ];
     file.".Xresources" = {
-      source = ../.Xresources;
       target = ".Xresources";
+      text = ''
+        UXTerm*foreground: orange
+        UXTerm*background: black
+	UXTerm*renderFont: true
+	UXTerm*faceName: inconsolata
+	UXTerm*faceSize: 10
+	Ctrl Shift <Key>C: copy-selection(CLIPBOARD)
+	Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
+      '';
     };
     file."i3" = {
       source = ../i3;
@@ -23,8 +42,30 @@
 
   programs.bash = {
     enable = true;
-    shellOptions = [ "autocd" "globstar" "extglob"];
-    profileExtra = ''if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi'';
+    historyIgnore = [ "ls" "cd" "pushd" "df" "du" "exit" ];
+    shellOptions = [ "autocd" "histappend" "extglob" "globstar" ];
+    profileExtra = ''
+      if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+        source $HOME/.nix-profile/etc/profile.d/nix.sh;
+      fi
+      
+      if [ -d $HOME/.local/bin ]; then
+        PATH="$HOME/.local/bin:$PATH"
+      fi
+
+      if [ -d $HOME/.config/profile.d ]; then
+        for profile in $HOME/.config/profile.d/*sh; do
+          source $profile;
+        done
+      fi
+    '';
+    bashrcExtra=''
+      if [ -e $HOME/.profile ]; then
+        source $HOME/.profile;
+      fi
+      
+      export PS1="\w $ "
+    '';
   };
 
   programs.direnv = {

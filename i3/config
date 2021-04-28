@@ -109,3 +109,4 @@ bar {
 # set wallpaper
 # exec --no-startup-id /usr/bin/feh --bg-fill "$HOME/.config/wallpaper/current.jpg"
 
+xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping Enabled' 1

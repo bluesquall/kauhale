@@ -30,6 +30,8 @@ UXTerm*renderFont: true
 !UXTerm*faceName: inconsolata
 UXTerm*faceName: Deja Vu Sans Mono
 UXTerm*faceSize: 10
+
+XTerm*selectToClipboard: true
 Ctrl Shift <Key>C: copy-selection(CLIPBOARD)
 Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       '';
@@ -112,14 +114,13 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       core = {
         editor = "nvim";
       };
-      init = {
-        defaultBranch = "main";
-      };
       url = {
         "git@github.com" = { insteadOf = "https://github.com/"; };
         "git@gitlab.com" = { insteadOf = "https://gitlab.com/"; };
         "git@bitbucket.org" = { insteadOf = "https://bitbucket.org/"; };
       };
+      commit.gpgsign = true;
+      init.defaultBranch = "main";
       pull.rebase = true;
       push.simple = true;
     };

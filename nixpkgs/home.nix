@@ -112,6 +112,9 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       core = {
         editor = "nvim";
       };
+      init = {
+        defaultBranch = "main";
+      };
       url = {
         "git@github.com" = { insteadOf = "https://github.com/"; };
         "git@gitlab.com" = { insteadOf = "https://gitlab.com/"; };

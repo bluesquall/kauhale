@@ -24,13 +24,14 @@
     file.".Xresources" = {
       target = ".Xresources";
       text = ''
-        UXTerm*foreground: orange
-        UXTerm*background: black
-	UXTerm*renderFont: true
-	UXTerm*faceName: inconsolata
-	UXTerm*faceSize: 10
-	Ctrl Shift <Key>C: copy-selection(CLIPBOARD)
-	Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
+UXTerm*foreground: orange
+UXTerm*background: black
+UXTerm*renderFont: true
+!UXTerm*faceName: inconsolata
+UXTerm*faceName: Deja Vu Sans Mono
+UXTerm*faceSize: 10
+Ctrl Shift <Key>C: copy-selection(CLIPBOARD)
+Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       '';
     };
     file."i3" = {

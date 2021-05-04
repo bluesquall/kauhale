@@ -6,8 +6,16 @@ set $mod Mod4
 font pango:DejaVu Sans Mono 10
 
 # start a terminal
+bindsym $mod+\ exec SHELL=$HOME/.nix-profile/bin/fish cool-retro-term
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec "SHELL=$HOME/.nix-profile/bin/fish uxterm"
+# bindsym $mod+Return exec SHELL=/usr/bin/fish uxterm
+# bindsym $mod+Return exec SHELL=$HOME/.nix-profile/bin/fish uxterm
+# bindsym $mod+Return exec SHELL=$HOME/.nix-profile/bin/fish kitty
+# bindsym $mod+Return exec SHELL=$HOME/.nix-profile/bin/fish $HOME/.nix-profile/bin/kitty
+bindsym $mod+Return exec st -f "Deja Vu Sans Mono:size=13" $HOME/.nix-profile/bin/fish
+
+# start a browser
+bindsym $mod+b exec firefox
 
 # kill focused window
 bindsym $mod+Shift+q kill

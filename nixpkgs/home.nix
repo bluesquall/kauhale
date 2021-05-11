@@ -115,9 +115,9 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
         editor = "nvim";
       };
       url = {
-        "git@github.com" = { insteadOf = "https://github.com/"; };
-        "git@gitlab.com" = { insteadOf = "https://gitlab.com/"; };
-        "git@bitbucket.org" = { insteadOf = "https://bitbucket.org/"; };
+        "git@github.com:" = { insteadOf = "https://github.com/"; };
+        "git@gitlab.com:" = { insteadOf = "https://gitlab.com/"; };
+        "git@bitbucket.org:" = { insteadOf = "https://bitbucket.org/"; };
       };
       commit.gpgsign = true;
       init.defaultBranch = "main";

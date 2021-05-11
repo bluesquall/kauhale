@@ -99,6 +99,9 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       end
 
       eval (direnv hook fish)
+
+      set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+      gpg-connect-agent updatestartuptty /bye &> /dev/null
       '';
   };
 

@@ -168,6 +168,13 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 
     defaultKeymap = "vicmd";
     dotDir = ".config/zsh";
+
+    oh-my-zsh = {
+      enable = true;
+      theme = "half-life";
+      plugins = [ "git" ];
+    };
+
     sessionVariables = {
       LCM_DEFAULT_URL = udpm://239.255.76.67:7667?ttl=1;
       PASSWORD_STORE_DIR = "$XDG_CONFIG_HOME/pass";

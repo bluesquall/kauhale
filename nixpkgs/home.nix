@@ -43,33 +43,33 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
     };
   };
 
-  programs.bash = {
-    enable = true;
-    historyIgnore = [ "ls" "cd" "pushd" "df" "du" "exit" ];
-    shellOptions = [ "autocd" "histappend" "extglob" "globstar" ];
-    profileExtra = ''
-      if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
-        source $HOME/.nix-profile/etc/profile.d/nix.sh;
-      fi
-      
-      if [ -d $HOME/.local/bin ]; then
-        PATH="$HOME/.local/bin:$PATH"
-      fi
-
-      if [ -d $HOME/.config/profile.d ]; then
-        for profile in $HOME/.config/profile.d/*sh; do
-          source $profile;
-        done
-      fi
-    '';
-    bashrcExtra=''
-      if [ -e $HOME/.profile ]; then
-        source $HOME/.profile;
-      fi
-      
-      export PS1="\w $ "
-    '';
-  };
+###   programs.bash = {
+###     enable = true;
+###     historyIgnore = [ "ls" "cd" "pushd" "df" "du" "exit" ];
+###     shellOptions = [ "autocd" "histappend" "extglob" "globstar" ];
+###     profileExtra = ''
+###       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+###         source $HOME/.nix-profile/etc/profile.d/nix.sh;
+###       fi
+###       
+###       if [ -d $HOME/.local/bin ]; then
+###         PATH="$HOME/.local/bin:$PATH"
+###       fi
+### 
+###       if [ -d $HOME/.config/profile.d ]; then
+###         for profile in $HOME/.config/profile.d/*sh; do
+###           source $profile;
+###         done
+###       fi
+###     '';
+###     bashrcExtra=''
+###       if [ -e $HOME/.profile ]; then
+###         source $HOME/.profile;
+###       fi
+###       
+###       export PS1="\w $ "
+###     '';
+###   };
 
   programs.direnv = {
     enable = true;

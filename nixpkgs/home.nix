@@ -150,10 +150,11 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
     vimAlias = true;
     vimdiffAlias = true;
     extraConfig = ''
-      let g:solarized_termcolors=256
+      " let g:solarized_termcolors=256
       colorscheme solarized
       set background=dark
-
+      set cursorline
+      nnoremap <F6> :let &bg=(&bg=='light'?'dark':'light')
     '';
     plugins = with pkgs.vimPlugins;
       let

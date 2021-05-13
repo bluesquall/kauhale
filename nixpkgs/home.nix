@@ -21,6 +21,21 @@
       podman
       tree
     ];
+
+    file."user-dirs.dirs" = {
+      target = ".config/user-dirs.dirs";
+      text = ''
+XDG_DESKTOP_DIR="/tmp"
+XDG_DOWNLOAD_DIR="/tmp"
+XDG_TEMPLATES_DIR="/tmp"
+XDG_PUBLICSHARE_DIR="/tmp"
+XDG_DOCUMENTS_DIR="/tmp"
+XDG_MUSIC_DIR="/tmp"
+XDG_PICTURES_DIR="/tmp"
+XDG_VIDEOS_DIR="/tmp"
+      '';
+    };
+
     file.".Xresources" = {
       target = ".Xresources";
       text = ''

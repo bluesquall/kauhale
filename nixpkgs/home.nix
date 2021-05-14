@@ -23,6 +23,7 @@
     ];
 
     file = {
+
       "user-dirs.dirs" = {
         target = ".config/user-dirs.dirs";
         text = ''
@@ -36,6 +37,7 @@ XDG_PICTURES_DIR="/tmp"
 XDG_VIDEOS_DIR="/tmp"
         '';
       };
+
       ".Xresources" = {
         target = ".Xresources";
         text = ''

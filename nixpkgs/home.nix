@@ -25,6 +25,11 @@
 
     file = {
 
+      "nix.conf" = {
+        target = ".config/nix/nix.conf";
+        text = "experimental-features = nix-command flakes";
+      };
+
       "user-dirs.dirs" = {
         target = ".config/user-dirs.dirs";
         text = ''

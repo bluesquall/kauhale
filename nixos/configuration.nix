@@ -12,6 +12,11 @@ in
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-20.09.tar.gz}/nixos"
   ];
 
+  nix = {
+    package = pkgs.nixUnstable;
+    extraOptions = "experimental-features = nix-command flakes";
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   hardware = {

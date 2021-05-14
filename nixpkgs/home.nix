@@ -98,7 +98,7 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
             sha256 = "00xqlyl3lffc5l0viin1nyp819wf81fncqyz87jx8ljjdhilmgbs";
           };
         }
-    {
+        {
           name = "theme-will";
           src = pkgs.fetchFromGitHub {
             owner = "oh-my-fish";
@@ -165,17 +165,17 @@ nnoremap <F6> :let &bg=(&bg=='light'?'dark':'light')
         let
           vim-colors-solarized = pkgs.vimUtils.buildVimPlugin {
             name = "vim-colors-solarized";
-	    src = pkgs.fetchFromGitHub {
+            src = pkgs.fetchFromGitHub {
               owner = "altercation";
-	      repo = "vim-colors-solarized";
-	      rev = "528a59f26d12278698bb946f8fb82a63711eec21";
-	      sha256 = "05d3lmd1shyagvr3jygqghxd3k8a4vp32723fvxdm57fdrlyzcm1";
-	    };
-	  };
+              repo = "vim-colors-solarized";
+              rev = "528a59f26d12278698bb946f8fb82a63711eec21";
+              sha256 = "05d3lmd1shyagvr3jygqghxd3k8a4vp32723fvxdm57fdrlyzcm1";
+            };
+          };
         in [
           sensible
           vim-colors-solarized
-	  vim-nix
+          vim-nix
         ];
     };
 

@@ -98,6 +98,15 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
             sha256 = "00xqlyl3lffc5l0viin1nyp819wf81fncqyz87jx8ljjdhilmgbs";
           };
         }
+    {
+          name = "theme-will";
+          src = pkgs.fetchFromGitHub {
+            owner = "oh-my-fish";
+            repo = "theme-will";
+            rev = "c33cdd5f013bc50be78cee968fe7a2b4b574fca9";
+            sha256 = "0667z3fzbqjb8dhkw2nj5hc76nzydai4na9ji7vd4x4lb8wbhnfk";
+          };
+        }
       ];
       interactiveShellInit = "set fish_greeting"; # get rid of the greeting
       loginShellInit = ''

@@ -99,6 +99,7 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
           };
         }
       ];
+      interactiveShellInit = "set fish_greeting"; # get rid of the greeting
       loginShellInit = ''
 if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
   fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh

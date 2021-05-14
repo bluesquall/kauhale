@@ -80,8 +80,6 @@ in
 
   environment.systemPackages = with pkgs; [ bash curl zsh ];
 
-  fonts.fonts = with pkgs; [ dejavu_fonts inconsolata ];
-
   users = {
     mutableUsers = false;
     users.${USERNAME} = {

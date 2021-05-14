@@ -69,6 +69,7 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
   };
 
   programs = {
+
     direnv = {
       enable = true;
       enableNixDirenvIntegration = true;

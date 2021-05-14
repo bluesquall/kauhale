@@ -19,6 +19,7 @@
       inconsolata
       less
       podman
+      st
       tree
     ];
 

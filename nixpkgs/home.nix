@@ -66,6 +66,15 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
         recursive = true;
       };
 
+      # The following are shell completions that *may* not be installed by the tools themselves.
+      "pass.fish-completion" = {
+        target = ".config/fish/completions/pass.fish-completion";
+        source = builtins.fetchurl {
+          url = "https://git.zx2c4.com/password-store/plain/src/completion/pass.fish-completion";
+          sha256 = "0clddzzkdcic3la95a4s72lz3yjdm7kgjgdkjxlx65sdrzscmnbj";
+        };
+      };
+
       # The following utilities could be aliases, but I'd like access to them in any shell.
       "ssh-copy-terminfo" = {
         executable = true;
@@ -179,6 +188,18 @@ nnoremap <F6> :let &bg=(&bg=='light'?'dark':'light')
         ];
     };
 
+    password-store = {
+      enable = true;
+      package = pkgs.pass.withExtensions (exts: [
+        exts.pass-checkup exts.pass-otp exts.pass-tomb
+      ]);
+      settings = {
+        PASSWORD_STORE_DIR = "$XDG_CONFIG_HOME/password-store";
+        PASSWORD_STORE_CHARACTER_SET = "[:alnum:]%&_?#=-";
+        PASSWORD_STORE_CLIP_TIME = "60";
+      };
+    };
+
     tmux = {
       enable = true;
       extraConfig = ''
@@ -209,8 +230,6 @@ path=(~/bin ~/.local/bin /$path[@])
       sessionVariables = {
         XDG_CONFIG_HOME = "$HOME/.config";
         XDG_CACHE_HOME = "$HOME/.cache";
-        PASSWORD_STORE_DIR = "$XDG_CONFIG_HOME/pass";
-        PASSWORD_STORE_CHARACTER_SET = "[:alnum:] %&_?#=-";
         GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
         LCM_DEFAULT_URL = udpm://239.255.76.67:7667?ttl=1;
       };

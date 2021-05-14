@@ -118,20 +118,6 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
         }
       ];
       interactiveShellInit = "set fish_greeting"; # get rid of the greeting
-      loginShellInit = ''
-if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-  fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-end
-
-if test -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh
-  fenv source /nix/var/nix/profiles/default/etc/profile.d/nix.sh
-end
-
-eval (direnv hook fish)
-
-set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-gpg-connect-agent updatestartuptty /bye &> /dev/null
-      '';
     };
 
     git = {

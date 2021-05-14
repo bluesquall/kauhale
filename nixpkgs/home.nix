@@ -65,6 +65,17 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
         target = "./.config/i3";
         recursive = true;
       };
+
+      # The following utilities could be aliases, but I'd like access to them in any shell.
+      "ssh-copy-terminfo" = {
+        executable = true;
+        target = ".local/bin/ssh-copy-terminfo";
+        text = ''
+#!/bin/bash
+TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && tic -x /tmp/terminfo; rm /tmp/terminfo"
+        '';
+      };
+
     };
   };
 

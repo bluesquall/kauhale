@@ -191,6 +191,11 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
       };
     };
 
+    gpg = {
+      enable = true;
+      homedir = "${config.home.homeDirectory}/.config/gnupg";
+    };
+
     neovim = {
       enable = true;
       viAlias = true;
@@ -263,7 +268,6 @@ path=(~/bin ~/.local/bin /$path[@])
       sessionVariables = {
         XDG_CONFIG_HOME = "$HOME/.config";
         XDG_CACHE_HOME = "$HOME/.cache";
-        GNUPGHOME = "$XDG_CONFIG_HOME/gnupg";
         LCM_DEFAULT_URL = udpm://239.255.76.67:7667?ttl=1;
       };
     };

@@ -212,7 +212,7 @@ set clipboard=unnamedplus
 set expandtab
 set tabstop=2
 set shiftwidth=2
-let g:markdown_fenced_languages = ['shell=sh' 'c' 'python']
+let g:markdown_fenced_languages = ['shell=sh', 'c', 'python']
       '';
       plugins = with pkgs.vimPlugins;
         let

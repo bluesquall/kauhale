@@ -74,7 +74,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bar {
         status_command i3status
 }
-xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping Enabled' 1
+exec xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping Enabled' 1
         '';
       };
 

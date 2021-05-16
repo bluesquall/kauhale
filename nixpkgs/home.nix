@@ -166,7 +166,12 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
           };
         }
       ];
-      interactiveShellInit = "set fish_greeting"; # get rid of the greeting
+      interactiveShellInit = ''
+        set fish_greeting # get rid of the greeting
+        if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
+          fenv source $HOME/.nix-profile/etc/profile.d/nix.sh
+        end
+      '';
     };
 
     git = {

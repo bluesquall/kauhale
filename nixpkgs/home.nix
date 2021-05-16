@@ -78,10 +78,10 @@ exec xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping
         '';
       };
 
-      "nix.conf" = {
-        target = ".config/nix/nix.conf";
-        text = "experimental-features = nix-command flakes";
-      };
+#      "nix.conf" = {
+#        target = ".config/nix/nix.conf";
+#        text = "experimental-features = nix-command flakes";
+#      };
 
       "user-dirs.dirs" = {
         target = ".config/user-dirs.dirs";
@@ -140,6 +140,8 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
     direnv = {
       enable = true;
       enableNixDirenvIntegration = true;
+      enableZshIntegration = true;
+      enableFishIntegration = true;
     };
 
     fish = {

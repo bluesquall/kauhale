@@ -205,8 +205,13 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
 " let g:solarized_termcolors=256
 colorscheme solarized
 set background=dark
-set cursorline
 nnoremap <F6> :let &bg=(&bg=='light'?'dark':'light')
+set cursorline
+set linebreak
+set clipboard=unnamedplus
+set expandtab
+set tabstop=2
+set shiftwidth=2
       '';
       plugins = with pkgs.vimPlugins;
         let

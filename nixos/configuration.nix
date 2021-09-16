@@ -9,7 +9,7 @@ in
   imports = [
     ./filesystems.nix
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-20.09.tar.gz}/nixos"
+    "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/master.tar.gz}/nixos"
   ];
 
   nix = {

@@ -23,11 +23,12 @@ in
     enableAllFirmware = true;
     cpu.amd.updateMicrocode = true;
     cpu.intel.updateMicrocode = true;
-    opengl = {
-      driSupport = true;
-      driSupport32Bit = true;
-      extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
-    };
+#    opengl = {
+#      driSupport = true;
+#      driSupport32Bit = true;
+#      extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
+#    };
+    video.hidpi.enable = lib.mkDefault true;
   };
 
   boot = {
@@ -59,7 +60,7 @@ in
       dpi = 180;
       layout = "us";
       libinput.enable = true;
-      videoDrivers = [ "amdgpu" "radeon" "nvidia" "vesa" "modesetting" ];
+      videoDrivers = [ "amdgpu" "vesa" "modesetting" ];
       # ^ These are tried in order until finding one that supports the GPU.
       displayManager = {
         sddm.enable = true;

@@ -23,11 +23,12 @@ in
     enableAllFirmware = true;
     cpu.amd.updateMicrocode = true;
     cpu.intel.updateMicrocode = true;
-#    opengl = {
-#      driSupport = true;
-#      driSupport32Bit = true;
+    opengl = {
+      driSupport = true;
+      driSupport32Bit = true;
 #      extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
-#    };
+      extraPackages = with pkgs; [ amdvlk ];
+    };
     video.hidpi.enable = lib.mkDefault true;
   };
 
@@ -79,7 +80,7 @@ in
 
   virtualisation.docker.enable = true;
 
-  environment.systemPackages = with pkgs; [ bash curl zsh ];
+  environment.systemPackages = with pkgs; [ bash curl xterm zsh ];
 
   users = {
     mutableUsers = false;

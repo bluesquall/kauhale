@@ -80,7 +80,7 @@ in
 
   virtualisation.docker.enable = true;
 
-  environment.systemPackages = with pkgs; [ bash curl xterm zsh ];
+  environment.systemPackages = with pkgs; [ bash curl git xterm zsh ];
 
   users = {
     mutableUsers = false;

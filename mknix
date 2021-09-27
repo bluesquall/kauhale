@@ -92,7 +92,6 @@ pushd /mnt/etc/nixos
 rawmain="https://raw.githubusercontent.com/${ghuser}/${ghrepo}/main"
 curl -#SLO "${rawmain}/nixos/filesystems.nix"
 curl -#SLO "${rawmain}/nixos/configuration.nix"
-curl -#SLO "${rawmain}/nixpkgs/home.nix"
 popd
 sed -i "s/encom/${hostname}/" /mnt/etc/nixos/configuration.nix
 sed -i "s/flynn/${user}/" /mnt/etc/nixos/configuration.nix

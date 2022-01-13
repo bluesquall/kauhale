@@ -289,7 +289,6 @@ path=(~/bin ~/.local/bin /$path[@])
   services = {
     gpg-agent = {
       enable = true;
-      enableSshSupport = true;
     };
   };
 }

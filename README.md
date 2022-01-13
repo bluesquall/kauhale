@@ -102,3 +102,4 @@ _____________
 [malloc47]: https://www.malloc47.com/migrating-to-nixos/
 [del-old-boot-conf]: http://blog.ielliott.io/how-to-delete-old-nixos-boot-configurations/
 [flakes]: https://www.tweag.io/blog/2020-05-25-flakes/
+[hm-flakes]: https://dee.underscore.world/blog/home-manager-flakes/

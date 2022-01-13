@@ -11,7 +11,7 @@
 
   outputs = { self, nixpkgs, homeManager }: {
     homeConfigurations = {
-      "flynn@encom" = homeManager.lib.homeManagerConfiguration {
+      "flynn" = homeManager.lib.homeManagerConfiguration {
         configuration = {pkgs, ...}: {
           programs.home-manager.enable = true;
           home = {

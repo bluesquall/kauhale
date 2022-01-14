@@ -48,6 +48,16 @@
 
     };
   in {
+
+    homeManagerConfigurations = {
+      "flynn" = home-manager.lib.homeManagerConfiguration {
+        inherit (kahua) system pkgs;
+        username = "flynn";
+        homeDirectory = "/home/flynn";
+        configuration = { imports = [ ../user/flynn/home.nix ]; };
+      }; # <-- TODO simplify with wrappers later, once understood
+    };
+
     nixosConfigurations = {
 
       minimalIso = lib.nixosSystem {

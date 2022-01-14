@@ -118,7 +118,7 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
         target = ".config/fish/completions/pass.fish-completion";
         source = builtins.fetchurl {
           url = "https://git.zx2c4.com/password-store/plain/src/completion/pass.fish-completion";
-          sha256 = "0clddzzkdcic3la95a4s72lz3yjdm7kgjgdkjxlx65sdrzscmnbj";
+          sha256 = "0ds5r7wf2dbca61776kgsfqk8axa4y4ik7vx5lvkdp50ahw2qq35";
         };
       };
 
@@ -137,12 +137,12 @@ TERMINFO=~/.nix-profile/share/terminfo infocmp | ssh $@ "cat > /tmp/terminfo && 
 
   programs = {
 
-    direnv = {
-      enable = true;
-      enableNixDirenvIntegration = true;
-      enableZshIntegration = true;
-      enableFishIntegration = true;
-    };
+###     direnv = {
+###       enable = true;
+###       enableNixDirenvIntegration = true;
+###       enableZshIntegration = true;
+###       enableFishIntegration = true;
+###     };
 
     fish = {
       enable = true;
@@ -241,9 +241,6 @@ let g:markdown_fenced_languages = ['shell=sh', 'c', 'python']
 
     password-store = {
       enable = true;
-      package = pkgs.pass.withExtensions (exts: [
-        exts.pass-checkup exts.pass-otp exts.pass-tomb
-      ]);
       settings = {
         PASSWORD_STORE_DIR = "$XDG_CONFIG_HOME/password-store";
         PASSWORD_STORE_CHARACTER_SET = "[:alnum:]%&_?#=-";

@@ -3,7 +3,7 @@
     "agenix": {
       "inputs": {
         "nixpkgs": [
-          "nixos"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -23,7 +23,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixos"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -40,7 +40,7 @@
         "type": "github"
       }
     },
-    "nixos": {
+    "nixpkgs": {
       "locked": {
         "lastModified": 1641887635,
         "narHash": "sha256-kDGpufwzVaiGe5e1sBUBPo9f1YN+nYHJlYqCaVpZTQQ=",
@@ -60,7 +60,7 @@
       "inputs": {
         "agenix": "agenix",
         "home-manager": "home-manager",
-        "nixos": "nixos"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

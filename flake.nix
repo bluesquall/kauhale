@@ -49,12 +49,12 @@
     };
   in {
 
-    homeManagerConfigurations = {
-      "flynn" = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations = {
+      flynn = home-manager.lib.homeManagerConfiguration {
         inherit (kahua) system pkgs;
         username = "flynn";
         homeDirectory = "/home/flynn";
-        configuration = { imports = [ ../user/flynn/home.nix ]; };
+        configuration = { imports = [ ./home.nix ]; };
       }; # <-- TODO simplify with wrappers later, once understood
     };
 
@@ -78,7 +78,7 @@
         inherit (kahua) system;
         modules = kahua.modules ++ [
           home-manager.nixosModules.home-manager
-          ./configuration.nix
+          ./os/configuration.nix
         ];
       };
 

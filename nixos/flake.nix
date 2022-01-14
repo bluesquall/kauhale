@@ -1,8 +1,24 @@
 # flake.nix
 {
   description = "kauhale-NixOS";
-  inputs.nixos.url = "github:nixos/nixpkgs/nixos-unstable";
-  outputs = { self, nixos }: {
+
+  inputs = {
+    nixos.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixos";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixos";
+    };
+
+    # utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
+  };
+
+  outputs = inputs@{ self, nixos, agenix, home-manager }: {
 
     nixosConfigurations = let
       kahua = {
@@ -37,7 +53,8 @@
       kauhale = nixos.lib.nixosSystem {
         inherit (kahua) system;
         modules = kahua.modules ++ [
-         ({ ... }: { imports = [ ./configuration.nix ] }) 
+          home-manager.nixosModules.home-manager
+          ./configuration.nix
         ];
       };
     };

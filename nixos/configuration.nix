@@ -9,7 +9,6 @@ in
   imports = [
     ./filesystems.nix
     <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/master.tar.gz}/nixos"
   ];
 
   nix = {
@@ -23,6 +22,7 @@ in
     enableAllFirmware = true;
     cpu.amd.updateMicrocode = true;
     cpu.intel.updateMicrocode = true;
+    # TODO ^ move the intel/amd specifications to host-specific files
     opengl = {
       driSupport = true;
       driSupport32Bit = true;
@@ -97,7 +97,5 @@ in
     };
   };
 
-  # home-manager.users.${USERNAME} = import ./home.nix;
-
-  system.stateVersion = "21.05";
+  system.stateVersion = "22.05";
 }

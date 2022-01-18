@@ -25,6 +25,7 @@
   outputs = { nixpkgs, agenix, home-manager, ... }:
   let # Wil says to put a let block in so we can do all our pre-calculated stuff at the top. TODO clarify
     lib = nixpkgs.lib;
+    
     kahua = { # foundation
       system = "x86_64-linux"; # TODO explore ways to generalize, at least to arm64
 
@@ -41,7 +42,7 @@
             # ^because WPA Supplicant cannot run with NetworkManager
           };
           environment = {
-            systemPackages = with pkgs; [ age bash curl git less neovim tree zsh ];
+            systemPackages = with pkgs; [ age bash curl git less neovim tmux tree zsh ];
           };
         })
       ];

@@ -2,7 +2,7 @@
 
 let
   USERNAME = "flynn";
-  UID = 1982;
+  UID = 4983;
   HOSTNAME = "encom";
 in
 {

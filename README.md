@@ -8,13 +8,37 @@ This is my [NixOS] home.
 
 ## getting started
 
-0. boot into a [NixOS]
+0. get a [NixOS] live system, e.g., from the [NixOS download page], or by
+   building one of the ISO images from this repo's `flake.nix`:
 
-1. [mknix], reboot
+   `nix build .#nixosConfigurations.minimalIso.config.system.build.isoImage`
+
+1. boot into the [NixOS] live system
+
+   - connect to your WiFi network:
+
+     `nmcli device wifi connect <SSID> --ask`
+
+2. install NixOS
+
+   a. directly from the remote:
+
+      `nixos-install --flake github:bluesquall/kauhale/main/nixos#encom`
+
+   b. clone this repo, modify accordingly, and install
+
+     - `git clone https://github.com/bluesquall/kauhale.git`
+
+     - modify to suit your needs
+
+     - `nixos-install --flake .#encom` or `nixos-install --system ./os/encom.nix`
+
+
+
+3. reboot
 
 ## hit the ground running
 
-1. connect to your WiFi network: `nmcli device wifi connect <SSID> --ask`
 
 2. ...
 
@@ -92,6 +116,7 @@ in `configuration.nix` and avoid relying on external state.
 _____________
 
 [NixOS]: https://nixos.org
+[NixOS download page]: https://nixos.org/download.html
 [mknix]: https://mjstanway.com/mknix
 [mt-caret]: https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
 [eyd]: https://grahamc.com/blog/erase-your-darlings

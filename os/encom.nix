@@ -13,8 +13,6 @@ in
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
   hardware = {
     enableAllFirmware = true;
     cpu.intel.updateMicrocode = true;
@@ -74,19 +72,7 @@ in
 
   environment.systemPackages = with pkgs; [ bash curl git xterm zsh ];
 
-  users = {
-    mutableUsers = false;
-    users.${USERNAME} = {
-      uid = UID;
-      home = "/home/${USERNAME}";
-      createHome = true;
-      isNormalUser = true;
-      extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
-      shell = pkgs.zsh; # keep a POSIX login shell
-      password = PASSWORD;
-      # hashedPassword = HASHEDPASSWORD;
-    };
-  };
-
+  users.mutableUsers = false;
+  
   system.stateVersion = "22.05";
 }

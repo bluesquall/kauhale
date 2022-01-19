@@ -27,38 +27,47 @@
     lib = nixpkgs.lib;
     
     kahua = { # foundation
+
       system = "x86_64-linux"; # TODO explore ways to generalize, at least to arm64
 
       pkgs = import nixpkgs {
         inherit (kahua) system;
-        config.allowUnfree = true;
+        # config.allowUnfree = true;
       };
 
-      modules = [
-        ({ lib, pkgs, ... }: {
+      modules = [ ({ lib, pkgs, ... }: {
               
-          nix = { pkgs, ... }: {
-            package = pkgs.nixUnstable;
-            extraOptions = "experimental-features = nix-command flakes";
-          };
+        nix = {
+          package = pkgs.nixUnstable;
+          extraOptions = "experimental-features = nix-command flakes";
+        };
         
-          networking = {
-            networkmanager.enable = true;
-            wireless.enable = lib.mkForce false;
-            # ^because WPA Supplicant cannot run with NetworkManager
-          };
-          environment = {
-            systemPackages = with pkgs; [ age bash curl git less neovim tmux tree zsh ];
-          };
-        })
-      ];
+        networking = {
+          networkmanager.enable = true;
+          wireless.enable = lib.mkForce false;
+          # ^because WPA Supplicant cannot run with NetworkManager
+        };
 
-    };
+        environment = {
+          systemPackages = with pkgs; [ age bash curl git less neovim tmux tree zsh ];
+        };
+
+      }) ];
+
+    }; # kahua
+
+    kauhale = {
+      modules = [
+        home-manager.nixosModules.home-manager {
+          home-manager.useUserPackages = true;
+        }
+      ];
+    }; # kauhale
   in {
 
     homeConfigurations = {
       flynn = home-manager.lib.homeManagerConfiguration {
-        inherit (kahua) system pkgs;
+        inherit (kahua) system;
         username = "flynn";
         homeDirectory = "/home/flynn";
         configuration = { imports = [ ./home.nix ]; };
@@ -81,11 +90,10 @@
         ];
       };
 
-      kauhale = lib.nixosSystem {
+      encom = lib.nixosSystem {
         inherit (kahua) system;
-        modules = kahua.modules ++ [
-          home-manager.nixosModules.home-manager
-          ./os/configuration.nix
+        modules = kahua.modules ++ kauhale.modules ++ [
+          ./os/encom.nix
         ];
       };
 

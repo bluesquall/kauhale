@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 
 let
   USERNAME = "flynn";

@@ -6,7 +6,7 @@ let
   HASHEDPASSWORD = "$6$frWxIgxN9nL6fg6S$NwQvooXT1KQaCAdh8Q7hxGY0Z2VV9VRxwCwWoLRPDBeTwVr3H7C748NYKgHSViK299C96yebVEs43RAKLGtlQ.";
 in
 {
-  age.secrets.password.file = ./secrets/password.age
+  age.secrets.password.file = ./secrets/password.age;
 
   users.users.${USERNAME} = {
     uid = UID;

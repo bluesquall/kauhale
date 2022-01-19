@@ -19,10 +19,12 @@ in
   };
 
   home-manager.users.${USERNAME} = { pkgs, ... }: {
-    pkgs.config.allowUnfree = true;
     imports = [ ./home.nix ];
-    home.username = USERNAME;
-    home.homeDirectory = "/home/${USERNAME}";
+    config = {
+      pkgs.config.allowUnfree = true;
+      home.username = USERNAME;
+      home.homeDirectory = "/home/${USERNAME}";
+    };
   };
 
 }

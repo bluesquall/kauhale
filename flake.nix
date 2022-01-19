@@ -94,7 +94,7 @@
       encom = lib.nixosSystem {
         inherit (kahua) system;
         modules = kahua.modules ++ kauhale.modules ++ [
-          ./os/encom.nix
+          ./os/encom
           ./user/flynn
         ];
       };

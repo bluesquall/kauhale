@@ -18,7 +18,7 @@ in
     hashedPassword = HASHEDPASSWORD;
   };
 
-  home-manager.users.${USERNAME} = { pkgs, ... } {
+  home-manager.users.${USERNAME} = { pkgs, ... }: {
     imports = [ ./home.nix ];
     home.username = USERNAME;
     home.homeDirectory = "/home/${USERNAME}";

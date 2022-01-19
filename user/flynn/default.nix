@@ -24,4 +24,4 @@ in
     home.homeDirectory = "/home/${USERNAME}";
   };
 
-};
+}

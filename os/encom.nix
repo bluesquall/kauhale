@@ -13,8 +13,6 @@ in
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
   hardware = {
     enableAllFirmware = true;
     cpu.intel.updateMicrocode = true;

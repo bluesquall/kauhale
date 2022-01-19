@@ -32,12 +32,12 @@
 
       pkgs = import nixpkgs {
         inherit (kahua) system;
-        config.allowUnfree = true;
+        # config.allowUnfree = true;
       };
 
       modules = [ ({ lib, pkgs, ... }: {
               
-        nix = { pkgs, ... }: {
+        nix = {
           package = pkgs.nixUnstable;
           extraOptions = "experimental-features = nix-command flakes";
         };
@@ -60,14 +60,14 @@
       modules = [
         home-manager.nixosModules.home-manager {
           home-manager.useUserPackages = true;
-        };
+        }
       ];
     }; # kauhale
   in {
 
     homeConfigurations = {
       flynn = home-manager.lib.homeManagerConfiguration {
-        inherit (kahua) system pkgs;
+        inherit (kahua) system;
         username = "flynn";
         homeDirectory = "/home/flynn";
         configuration = { imports = [ ./home.nix ]; };

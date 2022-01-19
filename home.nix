@@ -3,6 +3,8 @@
 {
   programs.home-manager.enable = true;
 
+  # pkgs.config.allowUnfree = true;
+
   fonts.fontconfig.enable = true;
 
   home = {

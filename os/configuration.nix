@@ -3,38 +3,30 @@
 let
   USERNAME = "flynn";
   UID = 4983;
+  PASSWORD = "change_me";
+  HASHEDPASSWORD = "to-do";
   HOSTNAME = "encom";
 in
 {
   imports = [
     ./filesystems.nix
-    (modulesPath + “installer/scan/not-detected.nix”
+    (modulesPath + "/installer/scan/not-detected.nix")
   ];
-
-  nix = {
-    package = pkgs.nixUnstable;
-    extraOptions = "experimental-features = nix-command flakes";
-  };
 
   nixpkgs.config.allowUnfree = true;
 
   hardware = {
     enableAllFirmware = true;
-    cpu.amd.updateMicrocode = true;
     cpu.intel.updateMicrocode = true;
-    # TODO ^ move the intel/amd specifications to host-specific files
     opengl = {
       driSupport = true;
       driSupport32Bit = true;
-#      extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
-      extraPackages = with pkgs; [ amdvlk ];
     };
     video.hidpi.enable = lib.mkDefault true;
   };
 
   boot = {
-    initrd.kernelModules = [ "amdgpu" ];
-    kernelModules = [ "kvm-amd" "kvm-intel" ];
+    kernelModules = [ "kvm-intel" ];
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "btrfs" ];
     loader = {
@@ -61,7 +53,7 @@ in
       dpi = 180;
       layout = "us";
       libinput.enable = true;
-      videoDrivers = [ "amdgpu" "vesa" "modesetting" ];
+      videoDrivers = [ "vesa" "modesetting" ];
       # ^ These are tried in order until finding one that supports the GPU.
       displayManager = {
         sddm.enable = true;
@@ -91,9 +83,8 @@ in
       isNormalUser = true;
       extraGroups = [ "dialout" "docker" "networkmanager" "wheel" ];
       shell = pkgs.zsh; # keep a POSIX login shell
-      passwordFile = "/home/.keys/${USERNAME}"; # <<=== echo "$(mkpasswd -m sha512crypt)" > /home/.keys/${USERNAME}
-      openssh.authorizedKeys.keys = [
-      ];
+      password = PASSWORD;
+      # hashedPassword = HASHEDPASSWORD;
     };
   };
 

@@ -59,6 +59,7 @@
     kauhale = {
       modules = [
         home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true; # otherwise pure evaluation fails for flakes
           home-manager.useUserPackages = true;
         }
       ];
@@ -70,9 +71,9 @@
         inherit (kahua) system;
         username = "flynn";
         homeDirectory = "/home/flynn";
-        configuration = { imports = [ ./home.nix ]; };
+        configuration = { imports = [ ./user/flynn/home.nix ]; };
       }; # <-- TODO simplify with wrappers later, once understood
-    };
+    }; # <-- TODO these seem nearly redundant with ./user/x/*.nix -- simplify
 
     nixosConfigurations = {
 
@@ -94,6 +95,7 @@
         inherit (kahua) system;
         modules = kahua.modules ++ kauhale.modules ++ [
           ./os/encom.nix
+          ./user/flynn
         ];
       };
 

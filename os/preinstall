@@ -54,8 +54,10 @@ mkdir -p /mnt/etc/nixos
 
 echo "prepared ${drive} for NixOS"
 echo "your next steps are to:"
-echo "  * install your system from a flake"
-echo "     (e.g., nixos-install --flake github:bluesquall/kauhale/main/nixos#encom)"
+echo "  * install your system from a flake, e.g.:
+echo "      nixos-install --flake .#encom"
+echo "    or
+echo “      nixos-install --flake github:bluesquall/kauhale#encom”
 echo "  * or, populate /mnt/etc/nixos with:"
 echo "    - filesystems.nix"
 echo "      (e.g., from https://raw.githubusercontent.com/bluesquall/kauhale/chunk/nixos/filesystems.nix)"

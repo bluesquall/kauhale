@@ -14,7 +14,7 @@ in
   ];
 
   hardware = {
-    enableAllFirmware = true;
+    # enableAllFirmware = true;
     cpu.intel.updateMicrocode = true;
     opengl = {
       driSupport = true;

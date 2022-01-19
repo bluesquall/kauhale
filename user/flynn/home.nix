@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ pkgs, ... }:
 
 {
   programs.home-manager.enable = true;
@@ -49,11 +49,10 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
     };
 
     tmux.enable = true;
-
-    services = {
-      gpg-agent.enable = true;
-      ssh-agent.enable = true;
-    };
-
   };
+
+  services = {
+    gpg-agent.enable = true;
+  };
+
 }

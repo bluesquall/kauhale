@@ -1,4 +1,4 @@
-{ config, pkgs, lib, home-manager, ... }:
+{ pkgs, ... }:
 
 let
   USERNAME = "flynn";
@@ -18,13 +18,6 @@ in
     hashedPassword = HASHEDPASSWORD;
   };
 
-  home-manager.users.${USERNAME} = { pkgs, ... }: {
-    imports = [ ./home.nix ];
-    config = {
-      pkgs.config.allowUnfree = true;
-      home.username = USERNAME;
-      home.homeDirectory = "/home/${USERNAME}";
-    };
-  };
+  home-manager.users.${USERNAME} = import ./home.nix;
 
 }

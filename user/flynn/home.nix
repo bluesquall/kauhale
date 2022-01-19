@@ -2,7 +2,6 @@
 
 {
   programs.home-manager.enable = true;
-  pkgs.config.allowUnfree = true;
   home = {
     sessionVariables = {
       PAGER = "less";

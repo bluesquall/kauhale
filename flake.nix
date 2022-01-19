@@ -5,8 +5,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    agenix = {
-      url = "github:ryantm/agenix";
+    ragenix = {
+      url = "github:yaxitech/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -22,7 +22,7 @@
   #           ^        ^ TODO why do some examples include `self`?
   #           ^ TODO what does this `inputs@` mean?
 
-  outputs = { nixpkgs, agenix, home-manager, ... }:
+  outputs = { nixpkgs, ragenix, home-manager, ... }:
   let # Wil says to put a let block in so we can do all our pre-calculated stuff at the top. TODO clarify
     lib = nixpkgs.lib;
     
@@ -35,24 +35,29 @@
         # config.allowUnfree = true;
       };
 
-      modules = [ ({ lib, pkgs, ... }: {
+      modules = [
+        ragenix.nixosModules.age
+
+        ({ lib, pkgs, ... }: {
+
               
-        nix = {
-          package = pkgs.nixUnstable;
-          extraOptions = "experimental-features = nix-command flakes";
-        };
+          nix = {
+            package = pkgs.nixUnstable;
+            extraOptions = "experimental-features = nix-command flakes";
+          };
         
-        networking = {
-          networkmanager.enable = true;
-          wireless.enable = lib.mkForce false;
-          # ^because WPA Supplicant cannot run with NetworkManager
-        };
+          networking = {
+            networkmanager.enable = true;
+            wireless.enable = lib.mkForce false;
+            # ^because WPA Supplicant cannot run with NetworkManager
+          };
 
-        environment = {
-          systemPackages = with pkgs; [ age bash curl git less neovim tmux tree zsh ];
-        };
+          environment = {
+            systemPackages = with pkgs; [ age bash curl git less neovim tmux tree zsh ];
+          };
+        })
 
-      }) ];
+      ];
 
     }; # kahua
 

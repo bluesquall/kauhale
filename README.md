@@ -37,10 +37,6 @@ This is my [NixOS] home.
 
 3. reboot
 
-## hit the ground running
-
-
-2. ...
 
 ## ramblin'
 

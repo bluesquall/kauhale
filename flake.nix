@@ -36,6 +36,12 @@
 
       modules = [
         ({ lib, pkgs, ... }: {
+              
+          nix = { pkgs, ... }: {
+            package = pkgs.nixUnstable;
+            extraOptions = "experimental-features = nix-command flakes";
+          };
+        
           networking = {
             networkmanager.enable = true;
             wireless.enable = lib.mkForce false;

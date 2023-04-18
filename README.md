@@ -8,6 +8,9 @@ This is my [NixOS] home.
 
 ## getting started
 
+
+### [NixOS] with flakes
+
 0. get a [NixOS] live system, e.g., from the [NixOS download page], or by
    building one of the ISO images from this repo's `flake.nix`:
 
@@ -37,6 +40,27 @@ This is my [NixOS] home.
 
 3. reboot
 
+### [Home Manager] with flakes
+
+With [Home Manager], you can still declare your user environment on another
+Linux distribution besides NixOS (e.g., Debian, Ubuntu, Arch) and even on
+Mac OS X.
+
+0. install `nix`[^0]
+
+   `sh <(curl -L https://nixos.org/nix/install) --daemon`
+
+1. install `home-manager`[^1]
+
+   `nix run home-manager/master -- init --switch`
+
+2. switch to your flake[^2]:
+
+   `home-manager switch --flake ~/src/kauhale#squall`
+
+   or, if you have different home configurations for different hosts:
+
+   `home-manager switch --flake ~/src/kauhale#$(whoami)@$(hostname)`
 
 ## ramblin'
 
@@ -110,9 +134,19 @@ in `configuration.nix` and avoid relying on external state.
 
 
 _____________
+[^0]: See the [NixOS download page].
+[^1]: See the [Home Manager chapter on flakes]. I used the installation
+      command for the unstable version because it worked the first time, and
+      does not depend on the flake in this repository working correctly. You
+      can always remove or overwrite the basic configuration it installs (in
+      `$XDG_CONFIG_HOME/home-manager` by default) or redirect the init to a
+      temporary folder: `nix run home-manager/master -- init /tmp/hm`.
+_____________
 
 [NixOS]: https://nixos.org
 [NixOS download page]: https://nixos.org/download.html
+[Home Manager]: https://github.com/nix-community/home-manager
+[Home Manager chapter on flakes]: https://nix-community.github.io/home-manager/index.html#ch-nix-flakes
 [mknix]: https://mjstanway.com/mknix
 [mt-caret]: https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
 [eyd]: https://grahamc.com/blog/erase-your-darlings

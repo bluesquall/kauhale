@@ -18,14 +18,10 @@
     # utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
   };
 
-  # outputs = inputs@{ self, nixpkgs, agenix, home-manager, ... }: {
-  #           ^        ^ TODO why do some examples include `self`?
-  #           ^ TODO what does this `inputs@` mean?
-
   outputs = { nixpkgs, ragenix, home-manager, ... }:
   let # Wil says to put a let block in so we can do all our pre-calculated stuff at the top. TODO clarify
     lib = nixpkgs.lib;
-    
+
     kahua = { # foundation
 
       system = "x86_64-linux"; # TODO explore ways to generalize, at least to arm64
@@ -40,31 +36,28 @@
 
         ({ lib, pkgs, ... }: {
 
-              
           nix = {
             package = pkgs.nixUnstable;
-            extraOptions = "experimental-features = nix-command flakes";
+            extraOptions = "experimental-features = nix-command flakes recursive-nix";
           };
-        
+
           networking = {
             networkmanager.enable = true;
             wireless.enable = lib.mkForce false;
             # ^because WPA Supplicant cannot run with NetworkManager
           };
 
-          environment = {
-            systemPackages = with pkgs; [ age bash curl git less neovim tmux tree zsh ];
-          };
+          environment.systemPackages = with pkgs; [ age bash curl git less neovim tmux tree zsh ];
+
         })
-
       ];
-
     }; # kahua
 
     kauhale = {
       modules = [
         home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true; # otherwise pure evaluation fails for flakes
+          home-manager.useGlobalPkgs = true;
+          # ^otherwise pure evaluation fails for flakes
           home-manager.useUserPackages = true;
         }
       ];
@@ -72,35 +65,39 @@
   in {
 
     homeConfigurations = {
-      flynn = home-manager.lib.homeManagerConfiguration {
-        inherit (kahua) system;
-        username = "flynn";
-        homeDirectory = "/home/flynn";
-        configuration = { imports = [ ./user/flynn/home.nix ]; };
-      }; # <-- TODO simplify with wrappers later, once understood
-    }; # <-- TODO these seem nearly redundant with ./user/x/*.nix -- simplify
+      squall = home-manager.lib.homeManagerConfiguration {
+	pkgs = nixpkgs.legacyPackages.${kahua.system};
+        modules = [ ./user/squall/home.nix ];
+	# extraSpecialArgs = { inherit inputs outputs; };
+      };
+      "squall@echo" = home-manager.lib.homeManagerConfiguration {
+	pkgs = nixpkgs.legacyPackages.${kahua.system};
+        modules = [ ./user/squall/home.nix ./user/squall/echo.nix ];
+	# extraSpecialArgs = { inherit inputs outputs; };
+      };
+    };
 
     nixosConfigurations = {
 
-      minimalIso = lib.nixosSystem {
-        inherit (kahua) system;
+      iso = lib.nixosSystem {
+        inherit (kahua) pkgs system;
         modules = kahua.modules ++ [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
         ];
       };
 
       plasmaIso = lib.nixosSystem {
-        inherit (kahua) system;
+        inherit (kahua) pkgs system;
         modules = kahua.modules ++ [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
         ];
       };
 
-      encom = lib.nixosSystem {
+      nimrod = lib.nixosSystem {
         inherit (kahua) system;
         modules = kahua.modules ++ kauhale.modules ++ [
-          ./os/encom
-          ./user/flynn
+          ./os/nimrod
+          ./user/squall
         ];
       };
 

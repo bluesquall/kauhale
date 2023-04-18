@@ -158,3 +158,6 @@ _____________
 [del-old-boot-conf]: http://blog.ielliott.io/how-to-delete-old-nixos-boot-configurations/
 [flakes]: https://www.tweag.io/blog/2020-05-25-flakes/
 [hm-flakes]: https://dee.underscore.world/blog/home-manager-flakes/
+[nix-flake-live]: https://hoverbear.org/blog/nix-flake-live-media/
+[practical-nix-flakes]: https://serokell.io/blog/practical-nix-flakes
+

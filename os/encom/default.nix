@@ -9,7 +9,7 @@ let
 in
 {
   imports = [
-    ./filesystems.nix
+    ../filesystems.nix
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 

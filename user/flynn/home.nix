@@ -16,6 +16,7 @@
       docker
       inconsolata
       less
+      qrencode
     ];
 
     file = {

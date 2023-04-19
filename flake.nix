@@ -66,14 +66,14 @@
 
     homeConfigurations = {
       squall = home-manager.lib.homeManagerConfiguration {
-	pkgs = nixpkgs.legacyPackages.${kahua.system};
+	      pkgs = nixpkgs.legacyPackages.${kahua.system};
         modules = [ ./user/squall/home.nix ];
-	# extraSpecialArgs = { inherit inputs outputs; };
+	      # extraSpecialArgs = { inherit inputs outputs; };
       };
       "squall@echo" = home-manager.lib.homeManagerConfiguration {
-	pkgs = nixpkgs.legacyPackages.${kahua.system};
+	      pkgs = nixpkgs.legacyPackages.${kahua.system};
         modules = [ ./user/squall/home.nix ./user/squall/echo.nix ];
-	# extraSpecialArgs = { inherit inputs outputs; };
+	      # extraSpecialArgs = { inherit inputs outputs; };
       };
     };
 

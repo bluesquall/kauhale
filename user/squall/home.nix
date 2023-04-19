@@ -21,6 +21,7 @@ in
       dejavu_fonts
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
       less
+      neovim
       tree
     ];
 
@@ -53,6 +54,29 @@ exec xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping
         '';
       };
 
+      "init.vim" = {
+        target = ".config/nvim/init.vim";
+	text = ''
+set nocompatible
+set encoding=utf-8
+set cursorline
+set colorcolumn=76
+set nowrap
+
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set smarttab
+
+autocmd BufWritePre * :%s/\s\+$//e
+autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal g`\"" |
+      \ endi
+	'';
+      };
+
       ".Xresources" = {
         target = ".Xresources";
         text = ''
@@ -81,38 +105,16 @@ set fish_greeting # get rid of the greeting
 
     gpg.enable = true;
 
+/*
     neovim = {
       enable = true;
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
-
-      extraLuaConfig = ''
-
-vim.opt.autoindent = true
-vim.opt.cursorline = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = 2
-vim.opt.expandtab = true
-vim.opt.smarttab = true
-vim.opt.colorcolumn = "76"
-
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  command = [[%s/\s\+$//e]],
-})
-
---[[
-require'nvim-lastplace'.setup {
-    lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
-    lastplace_ignore_filetype = {"gitcommit", "gitrebase", "svn", "hgcommit"},
-    lastplace_open_folds = true
-}
---]]
+      extraConfig = ''
       '';
-    };
+*/
 
     tmux.enable = true;
   };

@@ -88,7 +88,7 @@
 
   sound.enable = true;
 
-  environment.systemPackages = with pkgs; [ bash cryptsetup curl git libqrencode xterm zsh ];
+  environment.systemPackages = with pkgs; [ xterm ];
 
   users = {
     mutableUsers = false;

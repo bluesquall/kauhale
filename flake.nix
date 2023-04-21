@@ -47,8 +47,12 @@
             # ^because WPA Supplicant cannot run with NetworkManager
           };
 
-          environment.systemPackages = with pkgs; [ age bash curl git less neovim tmux tree zsh ];
+          programs.zsh.enable = true;
 
+          environment = {
+            shells = with pkgs; [ bash zsh ];
+            systemPackages = with pkgs; [ age cryptsetup curl git less neovim tmux tree qrencode ];
+          };
         })
       ];
     }; # kahua

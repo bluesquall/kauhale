@@ -30,7 +30,6 @@
       driSupport = true;
       driSupport32Bit = true;
     };
-    video.hidpi.enable = lib.mkDefault true;
     bluetooth = {
       enable = true;
       settings = {
@@ -42,7 +41,6 @@
     pulseaudio = {
       enable = true;
       package = pkgs.pulseaudioFull;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];
     };
   };
 
@@ -88,7 +86,12 @@
 
   sound.enable = true;
 
-  environment.systemPackages = with pkgs; [ xterm ];
+  programs.zsh.enable = true;
+
+  environment = {
+    shells = with pkgs; [ bash zsh ];
+    systemPackages = with pkgs; [ cryptsetup curl git qrencode xterm ];
+  };
 
   users = {
     mutableUsers = false;

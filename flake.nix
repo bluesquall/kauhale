@@ -79,7 +79,10 @@
       "squall@echo" = home-manager.lib.homeManagerConfiguration {
 	      pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = [
-          ({ nixpkgs.overlays = [ rust-overlay.overlays.default ]; })
+          ({ nixpkgs.overlays = [
+            rust-overlay.overlays.default
+            ragenix.overlays.default
+          ]; })
           ./user/squall/home.nix
           ./user/squall/echo.nix
         ];

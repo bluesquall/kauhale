@@ -19,7 +19,7 @@ in
 
     packages = with pkgs; [
       dejavu_fonts
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
       less
       neovim
       tree
@@ -83,7 +83,7 @@ autocmd BufReadPost *
 UXTerm*foreground: orange
 UXTerm*background: black
 UXTerm*renderFont: true
-UXTerm*faceName: Deja Vu Sans Mono
+UXTerm*faceName: FiraCode Nerd Font
 UXTerm*faceSize: 8
 
 XTerm*selectToClipboard: true

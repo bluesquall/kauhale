@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 let
-  USERNAME = "flynn";
-  UID = 4983;
+  USERNAME = "squall";
+  UID = 11781;
 in
 {
   age.secrets.hashedPassword.file = ./secrets/hashedPassword.age;

@@ -22,6 +22,7 @@ in
       (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
       less
       neovim
+      rust-bin.stable.latest.default
       tree
     ];
 

@@ -5,6 +5,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    rust-overlay.url = "github:oxalica/rust-overlay";
+
     ragenix = {
       url = "github:yaxitech/ragenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +20,7 @@
     # utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
   };
 
-  outputs = { nixpkgs, ragenix, home-manager, ... }:
+  outputs = { nixpkgs, rust-overlay, ragenix, home-manager, ... }:
   let # Wil says to put a let block in so we can do all our pre-calculated stuff at the top. TODO clarify
     lib = nixpkgs.lib;
 
@@ -75,8 +77,13 @@
 	      # extraSpecialArgs = { inherit inputs outputs; };
       };
       "squall@echo" = home-manager.lib.homeManagerConfiguration {
-	      pkgs = nixpkgs.legacyPackages.${kahua.system};
-        modules = [ ./user/squall/home.nix ./user/squall/echo.nix ];
+	      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [
+          ({ nixpkgs.overlays = [ rust-overlay.overlays.default ]; })
+          ./user/squall/home.nix
+          ./user/squall/echo.nix
+        ];
+
 	      # extraSpecialArgs = { inherit inputs outputs; };
       };
     };

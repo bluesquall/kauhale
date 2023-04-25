@@ -26,6 +26,7 @@ in
       neovim
       rust-bin.stable.latest.default
       tree
+      xterm
     ];
 
     file = {

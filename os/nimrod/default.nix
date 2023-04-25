@@ -93,6 +93,14 @@
     systemPackages = with pkgs; [ cryptsetup curl git qrencode xterm ];
   };
 
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.dnsname.enable = true;
+    };
+  };
+
   users = {
     mutableUsers = false;
     users.root.hashedPassword= "!"; # < disable password login for root

@@ -4,6 +4,7 @@ let
   USERNAME = "squall";
 in
 {
+  imports = [ ./zsh.nix ];
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
   home = {

@@ -97,6 +97,7 @@
     podman = {
       enable = true;
       dockerCompat = true;
+      extraPackages = [ pkgs.zfs ];
       defaultNetwork.dnsname.enable = true;
     };
   };

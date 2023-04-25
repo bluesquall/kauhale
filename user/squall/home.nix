@@ -19,8 +19,6 @@ in
     };
 
     packages = with pkgs; [
-      age
-      agenix
       dejavu_fonts
       (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
       less

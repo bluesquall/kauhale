@@ -118,6 +118,9 @@ set fish_greeting # get rid of the greeting
         pull = {
           rebase = true;
         };
+        diff = {
+          wsErrorHighlight = "all";
+        };
       };
     };
 

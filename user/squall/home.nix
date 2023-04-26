@@ -109,6 +109,18 @@ set fish_greeting # get rid of the greeting
       '';
     };
 
+    git = {
+      enable = true;
+      userName = "M Jordan Stanway";
+      userEmail = "m.j.stanway@alum.mit.edu";
+      extraConfig = {
+        init.defaultBranch = "main";
+        pull = {
+          rebase = true;
+        };
+      };
+    };
+
     gpg.enable = true;
 
 /*

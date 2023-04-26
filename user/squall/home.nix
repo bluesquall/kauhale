@@ -1,10 +1,18 @@
-{ pkgs, config, ... }:
-
+{ inputs, outputs, lib, config, pkgs, ... }:
 let
   USERNAME = "squall";
 in
 {
   imports = [ ./zsh.nix ];
+
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+    # overlays = [];
+  };
+
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
   home = {
@@ -151,4 +159,5 @@ set fish_greeting # get rid of the greeting
     gpg-agent.enable = true;
   };
 
+  systemd.user.startServices = "sd-switch";
 }

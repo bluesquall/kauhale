@@ -14,7 +14,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, rust-overlay, agenix, home-manager, ... }:
+  outputs = { self, nixpkgs, rust-overlay, agenix, home-manager, ... }@inputs:
   let # Wil says to put a let block in so we can do all our pre-calculated stuff at the top. TODO clarify
     lib = nixpkgs.lib;
     system = "x86_64-linux"; # TODO explore ways to generalize, at least to arm64
@@ -65,7 +65,7 @@
       squall = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         modules = kauhale ++ [ ./user/squall/home.nix ];
-        # extraSpecialArgs = { inherit inputs outputs; };
+        extraSpecialArgs = { inherit inputs outputs; };
       };
       "squall@echo" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -73,7 +73,7 @@
           ./user/squall/home.nix
           ./user/squall/echo.nix
         ];
-        # extraSpecialArgs = { inherit inputs outputs; };
+        extraSpecialArgs = { inherit inputs outputs; };
       };
     };
 
@@ -95,6 +95,7 @@
 
       nimrod = lib.nixosSystem {
         inherit pkgs system;
+        specialArgs = { inherit inputs outputs; };
         modules = kahua ++ [ ./os/nimrod ./user/squall ];
       };
 

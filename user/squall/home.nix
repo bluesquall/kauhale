@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
   USERNAME = "squall";
@@ -121,6 +121,13 @@ set fish_greeting # get rid of the greeting
       extraConfig = ''
       '';
 */
+
+    password-store = {
+      enable = true;
+      settings = {
+        PASSWORD_STORE_DIR = "${config.xdg.configHome}/password-store";
+      };
+    };
 
     tmux.enable = true;
   };

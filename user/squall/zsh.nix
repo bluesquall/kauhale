@@ -5,8 +5,9 @@
     enable = true;
     dotDir = ".config/zsh";
     enableCompletion = true;
+    enableAutosuggestions = true;
     enableSyntaxHighlighting = true;
-    defaultKeymap = "vicmd";
+    #defaultKeymap = "vicmd"; # <-- enabling this spews help at startup
     initExtra = ''
       ${builtins.readFile ./nvims.zsh}
     '';

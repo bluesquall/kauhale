@@ -94,7 +94,7 @@
       };
 
       nimrod = lib.nixosSystem {
-        inherit pkgs system overlays;
+        inherit pkgs system;
         modules = kahua ++ [ ./os/nimrod ./user/squall ];
       };
 

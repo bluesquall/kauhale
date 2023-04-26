@@ -1,5 +1,7 @@
 { config, lib, pkgs, modulesPath, ... }:
-
+let
+  HOSTNAME = "nimrod";
+in 
 {
   imports = [
     ../filesystems.nix

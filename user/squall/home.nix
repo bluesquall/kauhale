@@ -19,10 +19,9 @@ in
     };
 
     packages = with pkgs; [
-      dejavu_fonts
-      (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
       less
       neovim
+      (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
       rust-bin.stable.latest.default
       tree
       xterm
@@ -98,6 +97,10 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
   };
 
   programs = {
+
+    firefox = {
+      enable = true;
+    };
 
     fish = {
       enable = true;

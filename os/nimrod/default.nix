@@ -88,7 +88,10 @@ in
 
   sound.enable = true;
 
-  programs.zsh.enable = true;
+  programs = {
+    zsh.enable = true;
+    ssh.startAgent = true;
+  };
 
   environment = {
     shells = with pkgs; [ bash zsh ];

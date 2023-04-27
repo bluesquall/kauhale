@@ -10,7 +10,10 @@ in
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
     };
-    # overlays = [];
+    overlays = [
+      inputs.rust-overlay.overlays.default
+      inputs.agenix.overlays.default
+    ];
   };
 
   programs.home-manager.enable = true;
@@ -27,9 +30,12 @@ in
     };
 
     packages = with pkgs; [
+      age
+      agenix
       less
       neovim
       (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
+      rust-bin.stable.latest.default
       tree
       xterm
     ];

@@ -6,6 +6,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    rust-overlay.url = "github:oxalica/rust-overlay";
+
     agenix.url = "github:yaxitech/ragenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 

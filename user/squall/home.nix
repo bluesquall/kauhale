@@ -160,5 +160,14 @@ set fish_greeting # get rid of the greeting
     gpg-agent.enable = true;
   };
 
+  xdg = {
+    enable = true;
+    configFile = {
+      "i3status/config".source = ./i3status.conf;
+    };
+  };
+
+
+
   systemd.user.startServices = "sd-switch";
 }

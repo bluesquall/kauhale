@@ -1,8 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, ... }:
 let
   HOSTNAME = "nimrod";
 in
 {
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.hostPlatform = "x86_64-linux";
   imports = [
     ../filesystems.nix
   ];
@@ -21,8 +23,6 @@ in
       }
     ];
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   hardware = {
     enableAllFirmware = true;

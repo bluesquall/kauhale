@@ -3,8 +3,9 @@
   description = "group of houses comprising a home";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     rust-overlay.url = "github:oxalica/rust-overlay";
 
@@ -15,12 +16,13 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, agenix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, agenix, rust-overlay, ... }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
       # forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
       kahua = [
+        agenix.nixosModules.age
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           # ^otherwise pure evaluation fails for flakes
@@ -29,7 +31,18 @@
         ({ lib, pkgs, ... }: {
           nix = {
             package = pkgs.nixUnstable;
-            extraOptions = "experimental-features = nix-command flakes recursive-nix";
+            settings = {
+              auto-optimise-store = true;
+              experimental-features = "nix-command flakes recursive-nix";
+            };
+          };
+
+          nixpkgs = {
+            config = {
+              allowUnfree = true;
+              allowUnfreePredicate = (_: true);
+            };
+            overlays = [ agenix.overlays.default ];
           };
 
           networking = {
@@ -40,7 +53,7 @@
           programs.zsh.enable = true;
           environment = {
             shells = with pkgs; [ bash zsh ];
-            systemPackages = with pkgs; [ cryptsetup curl git less neovim tmux tree qrencode ];
+            systemPackages = with pkgs; [ age agenix cryptsetup curl git less neovim tmux tree qrencode ];
           };
         })
       ]; # kahua
@@ -76,12 +89,14 @@
         iso = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = kahua ++ [
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ];
         };
         plasmaIso = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = kahua ++ [
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
           ];
         };

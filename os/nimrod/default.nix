@@ -1,8 +1,9 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ inputs, outputs, lib, config, pkgs, ... }:
 let
   HOSTNAME = "nimrod";
 in
 {
+  nixpkgs.hostPlatform = "x86_64-linux";
   imports = [
     ../filesystems.nix
   ];
@@ -21,8 +22,6 @@ in
       }
     ];
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   hardware = {
     enableAllFirmware = true;
@@ -103,7 +102,7 @@ in
       enable = true;
       dockerCompat = true;
       extraPackages = [ pkgs.zfs ];
-      defaultNetwork.settings.dns_enabled = true;
+      # defaultNetwork.settings.dns_enabled = true;
     };
   };
 

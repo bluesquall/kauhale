@@ -100,6 +100,11 @@
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix"
           ];
         };
+        example = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./os/example ];
+          # modules = [ ./os/example ./user/squall ];
+        };
         nimrod = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = kahua ++ [ ./os/nimrod ./user/squall ];

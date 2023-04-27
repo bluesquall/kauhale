@@ -30,7 +30,7 @@ in
       agenix
       less
       neovim
-      (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
+      (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "Mononoki" ]; })
       rust-bin.stable.latest.default
       tree
       xterm

@@ -30,12 +30,15 @@
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         # ^otherwise pure evaluation fails for flakes
-        home-manager.useUserPackages = true;
+        #  & overlays don't propogate to home-manager
       }
       ({ lib, pkgs, ... }: {
         nix = {
           package = pkgs.nixUnstable;
-          extraOptions = "experimental-features = nix-command flakes recursive-nix";
+          settings = {
+              auto-optimise-store = true;
+              experimental-features = "nix-command flakes recursive-nix";
+            };
         };
 
         networking = {
@@ -51,29 +54,19 @@
       })
     ]; # kahua
 
-    kauhale = [
-      ({
-        nixpkgs.overlays = [
-          rust-overlay.overlays.default
-          agenix.overlays.default
-        ];
-      }) # <-- This looks redundant with the overlays inherited above. Is it necessary?
-    ]; # kauhale
-
   in {
     homeConfigurations = {
       squall = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = kauhale ++ [ ./user/squall/home.nix ];
-        # extraSpecialArgs = { inherit inputs outputs; };
-      };
-      "squall@echo" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = kauhale ++ [
+        modules = [
+          ({
+            nixpkgs.overlays = [
+              agenix.overlays.default
+              rust-overlay.overlays.default
+            ];
+          })
           ./user/squall/home.nix
-          ./user/squall/echo.nix
         ];
-        # extraSpecialArgs = { inherit inputs outputs; };
       };
     };
 

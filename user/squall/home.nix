@@ -10,7 +10,6 @@ in
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
     };
-    # overlays = [];
   };
 
   programs.home-manager.enable = true;
@@ -27,6 +26,8 @@ in
     };
 
     packages = with pkgs; [
+      age
+      agenix
       less
       neovim
       (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })

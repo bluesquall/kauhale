@@ -5,8 +5,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    rust-overlay.url = "github:oxalica/rust-overlay";
-
     agenix.url = "github:yaxitech/ragenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -14,11 +12,11 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, rust-overlay, agenix, home-manager, ... }:
+  outputs = { nixpkgs, agenix, home-manager, ... }:
   let # Wil says to put a let block in so we can do all our pre-calculated stuff at the top. TODO clarify
     lib = nixpkgs.lib;
     system = "x86_64-linux"; # TODO explore ways to generalize, at least to arm64
-    overlays = [ rust-overlay.overlays.default agenix.overlays.default ];
+    overlays = [ agenix.overlays.default ];
 
     pkgs = import nixpkgs {
       inherit system overlays;
@@ -62,7 +60,6 @@
           ({
             nixpkgs.overlays = [
               agenix.overlays.default
-              rust-overlay.overlays.default
             ];
           })
           ./user/squall/home.nix

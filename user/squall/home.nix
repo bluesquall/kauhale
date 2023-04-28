@@ -31,7 +31,6 @@ in
       less
       neovim
       (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "Mononoki" ]; })
-      rust-bin.stable.latest.default
       tree
       xterm
     ];

@@ -10,6 +10,8 @@
     #defaultKeymap = "vicmd"; # <-- enabling this spews help at startup
     initExtra = ''
       ${builtins.readFile ./nvims.zsh}
+      path=($HOME/.cargo/bin $path)
+      export PATH
     '';
     history = {
       ignoreSpace = true;

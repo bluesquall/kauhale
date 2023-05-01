@@ -55,13 +55,11 @@
   in {
     homeConfigurations = {
       squall = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = [ agenix.overlays.default ];
+        };
         modules = [
-          ({
-            nixpkgs.overlays = [
-              agenix.overlays.default
-            ];
-          })
           ./user/squall/home.nix
         ];
       };

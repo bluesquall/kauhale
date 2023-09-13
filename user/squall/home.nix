@@ -106,10 +106,6 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 
   programs = {
 
-    firefox = {
-      enable = true;
-    };
-
     fish = {
       enable = true;
       interactiveShellInit = ''

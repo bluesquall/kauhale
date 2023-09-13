@@ -95,7 +95,7 @@ in
 
   environment = {
     shells = with pkgs; [ bash zsh ];
-    systemPackages = with pkgs; [ cryptsetup curl git qrencode xterm ];
+    systemPackages = with pkgs; [ cryptsetup curl firefox git qrencode xterm ];
   };
 
   virtualisation = {

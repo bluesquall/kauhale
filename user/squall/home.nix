@@ -3,7 +3,7 @@ let
   USERNAME = "squall";
 in
 {
-  imports = [ ./zsh.nix ];
+  imports = [ ./zsh/zsh.nix ];
 
   nixpkgs = {
     config = {

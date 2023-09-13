@@ -10,6 +10,7 @@
     #defaultKeymap = "vicmd"; # <-- enabling this spews help at startup
     initExtra = ''
       ${builtins.readFile ./nvims.zsh}
+      ${builtins.readFile ./vcs.zsh}
       path=($HOME/.local/bin $HOME/.cargo/bin $path)
       export PATH
     '';

@@ -155,7 +155,11 @@ set fish_greeting # get rid of the greeting
   };
 
   services = {
-    gpg-agent.enable = true;
+    gpg-agent = {
+      enable = true;
+      defaultCacheTtl = 14400;
+      maxCacheTtl = 86400;
+    };
   };
 
   xdg = {

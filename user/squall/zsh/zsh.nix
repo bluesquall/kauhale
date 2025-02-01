@@ -10,6 +10,7 @@
     #defaultKeymap = "vicmd"; # <-- enabling this spews help at startup
     initExtra = ''
       ${builtins.readFile ./nvims.zsh}
+      ${builtins.readFile ./su2.zsh}
       ${builtins.readFile ./vcs.zsh}
       ${builtins.readFile ./path.zsh}
     '';

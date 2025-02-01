@@ -11,8 +11,7 @@
     initExtra = ''
       ${builtins.readFile ./nvims.zsh}
       ${builtins.readFile ./vcs.zsh}
-      path=($HOME/.local/bin $HOME/.cargo/bin $path)
-      export PATH
+      ${builtins.readFile ./path.zsh}
     '';
     history = {
       ignoreSpace = true;

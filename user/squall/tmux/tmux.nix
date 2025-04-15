@@ -3,9 +3,13 @@
 {
   programs.tmux = {
     enable = true;
+    sensibleOnTop = true;
+    terminal = "tmux-256color";
+    keyMode = "vi";
+    clock24 = true;
     extraConfig = "
-      set-option -g allow-rename off
-      set-option -g status-position top
+set -g allow-rename off
+set -g status-position top
     ";
   };
 }

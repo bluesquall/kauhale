@@ -3,7 +3,10 @@ let
   USERNAME = "squall";
 in
 {
-  imports = [ ./zsh/zsh.nix ];
+  imports = [
+    ./tmux/tmux.nix
+    ./zsh/zsh.nix
+  ];
 
   nixpkgs = {
     config = {
@@ -151,7 +154,6 @@ set fish_greeting # get rid of the greeting
       };
     };
 
-    tmux.enable = true;
   };
 
   services = {

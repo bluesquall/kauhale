@@ -33,7 +33,7 @@ in
       agenix
       less
       neovim
-      (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "Mononoki" ]; })
+      (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
       tree
       xterm
     ];

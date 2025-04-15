@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    ./fish/fish.nix
     ./tmux/tmux.nix
     ./zsh/zsh.nix
   ];
@@ -108,13 +109,6 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
   };
 
   programs = {
-
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-set fish_greeting # get rid of the greeting
-      '';
-    };
 
     git = {
       enable = true;

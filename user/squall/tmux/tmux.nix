@@ -11,7 +11,7 @@
     plugins = with pkgs; [
       {
         plugin = tmuxPlugins.catppuccin;
-        extraConfig = ${builtins.readFile ./catppuccin.tmux.conf};
+        extraConfig = ''${builtins.readFile ./catppuccin.tmux.conf};''
       }
       {
         plugin = tmuxPlugins.resurrect;

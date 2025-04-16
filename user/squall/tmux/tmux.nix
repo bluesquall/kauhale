@@ -11,11 +11,7 @@
     plugins = with pkgs; [
       {
         plugin = tmuxPlugins.catppuccin;
-        extraConfig = ''
-          set -g @catppuccin_flavour 'frappe'
-          set -g @catppuccin_window_tabs_enabled on
-          set -g @catppuccin_date_time "%H:%M"
-        '';
+        extraConfig = ${builtins.readFile ./catppuccin.tmux.conf};
       }
       {
         plugin = tmuxPlugins.resurrect;

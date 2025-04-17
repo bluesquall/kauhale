@@ -21,6 +21,25 @@
         plugin = tmuxPlugins.cpu;
         extraConfig = '' '';
       }
+      {
+        plugin = tmuxPlugins.mkTmuxPlugin {
+          pluginName = "tmux-pomodoro-plus";
+          version = "git-f1b76b7";
+          src = fetchFromGitHub {
+            owner = "olimorris";
+            repo = "tmux-pomodoro-plus";
+            rev = "f1b76b7";
+            sha256 = "";
+          };
+        };
+        extraConfig = ''
+          set -g @pomodoro_on "#[fg=$text_red]🍅 "
+          set -g @pomodoro_complete "#[fg=$text_green]🍅 "
+          set -g @pomodoro_pause "#[fg=$color_yellow]🍅 "
+          set -g @pomodoro_prompt_break "#[fg=$color_green]🕤 ? "
+          set -g @pomodoro_prompt_pomodoro "#[fg=$color_gray]🕤 ? "
+        '';
+      }
       # leave resurrect & continuum last: https://haseebmajid.dev/posts/2023-07-10-setting-up-tmux-with-nix-home-manager/
       {
         plugin = tmuxPlugins.resurrect;

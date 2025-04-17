@@ -29,7 +29,7 @@
             owner = "olimorris";
             repo = "tmux-pomodoro-plus";
             rev = "f1b76b7";
-            sha256 = "";
+            sha256 = "sha256-pWnfq2yAy9PkXatxto9eRPczoyrNEpA6l9683Q0gWQA=";
           };
         };
         extraConfig = ''

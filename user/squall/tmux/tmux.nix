@@ -14,6 +14,15 @@
         extraConfig = ''${builtins.readFile ./catppuccin.tmux.conf}'';
       }
       {
+        plugin = tmuxPlugins.battery;
+        extraConfig = '' '';
+      }
+      {
+        plugin = tmuxPlugins.cpu;
+        extraConfig = '' '';
+      }
+      # leave resurrect & continuum last: https://haseebmajid.dev/posts/2023-07-10-setting-up-tmux-with-nix-home-manager/
+      {
         plugin = tmuxPlugins.resurrect;
         extraConfig = ''
           set -g @resurrect-strategy-vim 'session'
@@ -35,6 +44,11 @@
       ${builtins.readFile ./ux.tmux.conf}
       ${builtins.readFile ./true-color.tmux.conf}
       ${builtins.readFile ./undercurl.tmux.conf}
+
+      # It is not clear whether these need to be run again or not. Try removing them later.
+      run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
+      run-shell ${pkgs.tmuxPlugins.battery}/share/tmux-plugins/battery/battery.tmux
+      run-shell ${pkgs.tmuxPlugins.catppuccin}/share/tmux-plugins/catppuccin/catppuccin.tmux
     '';
   };
 }

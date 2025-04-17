@@ -23,7 +23,7 @@
       }
       {
         plugin = tmuxPlugins.mkTmuxPlugin {
-          pluginName = "tmux-pomodoro-plus";
+          pluginName = "pomodoro";
           version = "git-f1b76b7";
           src = fetchFromGitHub {
             owner = "olimorris";
@@ -66,7 +66,7 @@
 
       run-shell ${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/cpu.tmux
       run-shell ${pkgs.tmuxPlugins.battery}/share/tmux-plugins/battery/battery.tmux
-      run-shell /nix/store/rw64d5dms4fs7ikz98kcnvagm4ad7ixk-tmuxplugin-tmux-pomodoro-plus-git-f1b76b7/share/tmux-plugins/tmux-pomodoro-plus/pomodoro.tmux
+      run-shell /nix/store/qf2kjkjj2nlix5r7s3ihpn72fpwak60p-tmuxplugin-pomodoro-git-f1b76b7/share/tmux-plugins/pomodoro/pomodoro.tmux
     '';
   };
 }

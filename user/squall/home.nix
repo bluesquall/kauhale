@@ -34,7 +34,8 @@ in
       agenix
       less
       neovim
-      (nerdfonts.override { fonts = [ "FiraCode" "Mononoki" ]; })
+      nerd-fonts.fira-code
+      nerd-fonts.mononoki
       tree
       xterm
     ];

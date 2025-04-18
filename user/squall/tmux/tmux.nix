@@ -33,6 +33,9 @@
           };
         };
         extraConfig = ''
+          set -g @pomodoro_toggle 'k' # [p] k
+          set -g @pomodoro_cancel 'K' # [P] K
+          set -g @pomodoro_skip '=' # [_] =
           set -g @pomodoro_on "#[fg=$text_red]🍅 "
           set -g @pomodoro_complete "#[fg=$text_green]🍅 "
           set -g @pomodoro_pause "#[fg=$color_yellow]🍅 "

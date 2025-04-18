@@ -36,6 +36,7 @@ in
       neovim
       nerd-fonts.fira-code
       nerd-fonts.mononoki
+      pinentry-curses
       tree
       xterm
     ];
@@ -156,6 +157,9 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       enable = true;
       defaultCacheTtl = 14400;
       maxCacheTtl = 86400;
+      pinentryPackage = pkgs.pinentry-curses;
+      extraConfig = ''
+      '';
     };
   };
 

@@ -24,9 +24,6 @@
       theme = "robbyrussell";
     };
   };
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+  programs.fzf.enableZshIntegration = true;
   services.gpg-agent.enableZshIntegration = true;
 }

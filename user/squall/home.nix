@@ -112,6 +112,8 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 
   programs = {
 
+    fzf.enable = true;
+
     git = {
       enable = true;
       userName = "M Jordan Stanway";

@@ -28,4 +28,5 @@
     enable = true;
     enableZshIntegration = true;
   };
+  services.gpg-agent.enableZshIntegration = true;
 }

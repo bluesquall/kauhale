@@ -172,7 +172,5 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
     };
   };
 
-
-
   systemd.user.startServices = "sd-switch";
 }

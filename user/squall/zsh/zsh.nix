@@ -13,15 +13,12 @@
       ${builtins.readFile ./su2.zsh}
       ${builtins.readFile ./vcs.zsh}
       ${builtins.readFile ./path.zsh}
+
+      eval "$(starship init zsh)"
     '';
     history = {
       ignoreSpace = true;
       share = true;
-    };
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" "sudo" ];
-      theme = "robbyrussell";
     };
   };
   programs.fzf.enableZshIntegration = true;

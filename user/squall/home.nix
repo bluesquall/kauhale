@@ -152,6 +152,10 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       };
     };
 
+    starship = {
+      enable = true;
+    };
+
   };
 
   services = {

@@ -21,6 +21,13 @@
         plugin = tmuxPlugins.cpu;
         extraConfig = '' '';
       }
+      {
+        plugin = tmuxPlugins.pass;
+        extraConfig = ''
+          set -g @pass-key k
+          set -g @pass-hide-pw-from-preview 'on'
+        '';
+      }
       # leave resurrect & continuum last: https://haseebmajid.dev/posts/2023-07-10-setting-up-tmux-with-nix-home-manager/
       {
         plugin = tmuxPlugins.resurrect;

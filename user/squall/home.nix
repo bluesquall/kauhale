@@ -32,8 +32,8 @@ in
     packages = with pkgs; [
       age
       agenix
+      clolcat
       less
-      lolcat
       neovim
       nerd-fonts.fira-code
       nerd-fonts.mononoki

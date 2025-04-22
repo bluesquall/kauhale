@@ -33,6 +33,7 @@ in
       age
       agenix
       less
+      lolcat
       neovim
       nerd-fonts.fira-code
       nerd-fonts.mononoki

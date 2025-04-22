@@ -32,6 +32,7 @@ in
     packages = with pkgs; [
       age
       agenix
+      bibiman
       clolcat
       less
       neovim

@@ -136,6 +136,13 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
 
     gpg.enable = true;
 
+    helix = {
+      enable = true;
+      settings = {
+        theme = "catppuccin_macchiato";
+      };
+    };
+
 /*
     neovim = {
       enable = true;

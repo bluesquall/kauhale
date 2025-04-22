@@ -22,6 +22,15 @@
         extraConfig = '' '';
       }
       {
+        plugin = tmuxPlugins.tmux-floax;
+        extraConfig = ''
+          set -g @floax-bind 'C-v'
+          set -g @floax-width '90%'
+          set -g @floax-height '90%'
+          set -g @floax-border-color 'green'
+        '';
+      }
+      {
         plugin = tmuxPlugins.pass;
         extraConfig = ''
           set -g @pass-key k

@@ -27,8 +27,6 @@ in
 
     sessionVariables = {
       PAGER = "less";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
     };
 
     packages = with pkgs; [
@@ -85,6 +83,7 @@ in
 
     kakoune = {
       enable = true;
+      defaultEditor = true;
       config = {
         colorScheme = "zenburn";
         tabStop = 2;

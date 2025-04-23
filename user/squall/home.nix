@@ -74,17 +74,7 @@ exec xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping
 
       ".Xresources" = {
         target = ".Xresources";
-        text = ''
-UXTerm*foreground: orange
-UXTerm*background: black
-UXTerm*renderFont: true
-UXTerm*faceName: FiraCode Nerd Font
-UXTerm*faceSize: 8
-
-XTerm*selectToClipboard: true
-Ctrl Shift <Key>C: copy-selection(CLIPBOARD)
-Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
-        '';
+        source = ./Xresources;
       };
     };
   };

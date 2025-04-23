@@ -1,0 +1,21 @@
+set $mod Mod4
+font pango:monospace 8
+bindsym $mod+Return exec "SHELL=`which fish` st"
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec dmenu_run
+bindsym $mod+h split h
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+set $ws1 "1"
+set $ws2 "2"
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bar {
+  status_command i3status
+}
+exec xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping Enabled' 1

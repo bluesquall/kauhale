@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./fish/fish.nix
+    # ./i3 # I've moved this, but not tested yet, since I'm revising hm on Pop!OS
     ./neovim
     ./tmux/tmux.nix
     ./zsh/zsh.nix
@@ -44,34 +45,6 @@ in
     ];
 
     file = {
-
-      "i3.config" = {
-        target = ".config/i3/config";
-        text = ''
-set $mod Mod4
-font pango:monospace 8
-bindsym $mod+Return exec "SHELL=`which fish` uxterm"
-bindsym $mod+Shift+q kill
-bindsym $mod+d exec dmenu_run
-bindsym $mod+h split h
-bindsym $mod+v split v
-bindsym $mod+f fullscreen toggle
-bindsym $mod+Shift+r restart
-bindsym $mod+Shift+c reload
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-set $ws1 "1"
-set $ws2 "2"
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bar {
-        status_command i3status
-}
-exec xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping Enabled' 1
-        '';
-      };
-
       ".Xresources" = {
         target = ".Xresources";
         source = ./Xresources;
@@ -134,12 +107,7 @@ exec xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping
     };
   };
 
-  xdg = {
-    enable = true;
-    configFile = {
-      "i3status/config".source = ./i3status.conf;
-    };
-  };
+  xdg.enable = true;
 
   systemd.user.startServices = "sd-switch";
 }

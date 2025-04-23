@@ -9,6 +9,7 @@
     syntaxHighlighting.enable = true;
     #defaultKeymap = "vicmd"; # <-- enabling this spews help at startup
     initContent = ''
+      ${builtins.readFile ./alias.zsh}
       ${builtins.readFile ./nvims.zsh}
       ${builtins.readFile ./su2.zsh}
       ${builtins.readFile ./vcs.zsh}

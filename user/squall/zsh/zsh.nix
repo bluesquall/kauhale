@@ -8,7 +8,7 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     #defaultKeymap = "vicmd"; # <-- enabling this spews help at startup
-    initExtra = ''
+    initContent = ''
       ${builtins.readFile ./nvims.zsh}
       ${builtins.readFile ./su2.zsh}
       ${builtins.readFile ./vcs.zsh}

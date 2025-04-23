@@ -100,6 +100,8 @@ in
 
     starship = {
       enable = true;
+      enableInteractive = true;
+      settings = builtins.readFile ./starship.toml;
     };
 
   };

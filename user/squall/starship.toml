@@ -1,0 +1,9 @@
+add_newline = false
+
+[shell]
+fish_indicator = '󰈺 '
+powershell_indicator = '_'
+zsh_indicator = 'ℤ >'
+unknown_indicator = '? >'
+# style = 'cyan bold'
+disabled = false

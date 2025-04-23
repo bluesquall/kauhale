@@ -8,6 +8,7 @@
 set fish_greeting # get rid of the greeting
     '';
   };
+  programs.starship.enableFishIntegration = true;
 }
 
 

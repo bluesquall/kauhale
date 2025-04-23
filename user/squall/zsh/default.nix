@@ -21,6 +21,11 @@
       share = true;
     };
   };
-  programs.fzf.enableZshIntegration = true;
+
+  programs = {
+    fzf.enableZshIntegration = true;
+    starship.enableZshIntegration = true;
+  };
+
   services.gpg-agent.enableZshIntegration = true;
 }

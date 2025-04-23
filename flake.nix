@@ -5,6 +5,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixgl.url   = "github:nix-community/nixGL";
+    nixgl.inputs.nixpkgs.follows = "nixpkgs";
+
     agenix.url = "github:yaxitech/ragenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -12,7 +15,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, agenix, home-manager, ... }:
+  outputs = { nixpkgs, nixgl, agenix, home-manager, ... }:
   let # Wil says to put a let block in so we can do all our pre-calculated stuff at the top. TODO clarify
     lib = nixpkgs.lib;
     system = "x86_64-linux"; # TODO explore ways to generalize, at least to arm64
@@ -62,6 +65,9 @@
         modules = [
           ./user/squall/home.nix
         ];
+        extraSpecialArgs = {
+          nixgl = nixgl;
+        };
       };
     };
 

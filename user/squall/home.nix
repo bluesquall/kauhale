@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
+{ inputs, outputs, lib, config, pkgs, nixgl, ... }:
 let
   USERNAME = "squall";
 in
@@ -16,6 +16,12 @@ in
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
     };
+  };
+
+  nixGL = {
+    packages = import nixgl { inherit pkgs; };
+    defaultWrapper = "mesa";
+    installScripts = [ "mesa" ];
   };
 
   programs.home-manager.enable = true;
@@ -97,6 +103,7 @@ in
 
     wezterm = {
       enable = true;
+      package = config.lib.nixGL.wrap pkgs.wezterm;
       enableBashIntegration = true;
       # enableFishIntegration = true;
       enableZshIntegration = true;

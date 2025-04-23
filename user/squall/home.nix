@@ -39,10 +39,7 @@ in
     ];
 
     file = {
-      ".Xresources" = {
-        target = ".Xresources";
-        source = ./Xresources;
-      };
+      ".Xresources".source = ./Xresources;
     };
   };
 

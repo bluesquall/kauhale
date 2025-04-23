@@ -158,6 +158,12 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
     enable = true;
     configFile = {
       "i3status/config".source = ./i3status.conf;
+      "AstroNvim".source = builtins.fetchGit {
+        url = "https://github.com/AstroNvim/template";
+        rev = "870c63b3942dbc1148ef0f2defd9af710cb64f5a";
+        shallow = true;
+
+      };
     };
   };
 

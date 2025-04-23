@@ -4,12 +4,12 @@ let
 in
 {
   imports = [
-    ./fish/fish.nix
+    ./fish
     # ./i3 # I've moved this, but not tested yet, since I'm revising hm on Pop!OS
     ./neovim
-    ./tmux/tmux.nix
+    ./tmux
     # ./wezterm
-    ./zsh/zsh.nix
+    ./zsh
   ];
 
   nixpkgs = {

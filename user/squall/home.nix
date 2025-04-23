@@ -95,6 +95,14 @@ in
       enable = true;
     };
 
+    wezterm = {
+      enable = true;
+      enableBashIntegration = true;
+      # enableFishIntegration = true;
+      enableZshIntegration = true;
+      # extraConfig = builtins.readFile ./wezterm.lua
+    };
+
   };
 
   services = {

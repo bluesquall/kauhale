@@ -12,9 +12,12 @@
     '';
   };
 
-
   xdg.configFile."AstroNvim" = {
     source = ./AstroNvim;
+    recursive = true;
+  };
+  xdg.configFile."LazyVim" = {
+    source = ./LazyVim;
     recursive = true;
   };
 }

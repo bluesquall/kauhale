@@ -83,6 +83,14 @@ in
       };
     };
 
+    kakoune = {
+      enable = true;
+      config = {
+        colorScheme = "zenburn";
+        tabStop = 2;
+      };
+    };
+
     password-store = {
       enable = true;
       settings = {

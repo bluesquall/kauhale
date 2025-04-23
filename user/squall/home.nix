@@ -8,7 +8,7 @@ in
     # ./i3 # I've moved this, but not tested yet, since I'm revising hm on Pop!OS
     ./neovim
     ./tmux/tmux.nix
-    ./wezterm
+    # ./wezterm
     ./zsh/zsh.nix
   ];
 

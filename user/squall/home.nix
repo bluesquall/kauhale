@@ -30,6 +30,7 @@ in
       agenix
       bibiman
       clolcat
+      dotacat
       less
       nerd-fonts.fira-code
       nerd-fonts.mononoki

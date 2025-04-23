@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./fish/fish.nix
+    ./neovim
     ./tmux/tmux.nix
     ./zsh/zsh.nix
   ];
@@ -119,17 +120,6 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       };
     };
 
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-      extraConfig = ''
-        ${builtins.readFile ./init.vim}
-      '';
-    };
-
     password-store = {
       enable = true;
       settings = {
@@ -158,12 +148,6 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
     enable = true;
     configFile = {
       "i3status/config".source = ./i3status.conf;
-      "AstroNvim".source = builtins.fetchGit {
-        url = "https://github.com/AstroNvim/template";
-        rev = "870c63b3942dbc1148ef0f2defd9af710cb64f5a";
-        shallow = true;
-
-      };
     };
   };
 

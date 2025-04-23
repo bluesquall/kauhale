@@ -35,7 +35,6 @@ in
       bibiman
       clolcat
       less
-      neovim
       nerd-fonts.fira-code
       nerd-fonts.mononoki
       pinentry-curses
@@ -70,29 +69,6 @@ bar {
 }
 exec xinput set-prop (xinput list --name-only | grep Touchpad) 'libinput Tapping Enabled' 1
         '';
-      };
-
-      "init.vim" = {
-        target = ".config/nvim/init.vim";
-	text = ''
-set nocompatible
-set encoding=utf-8
-set cursorline
-set colorcolumn=76
-set nowrap
-
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-set smarttab
-
-autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufReadPost *
-      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-      \   exe "normal g`\"" |
-      \ endi
-	'';
       };
 
       ".Xresources" = {
@@ -143,7 +119,6 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       };
     };
 
-/*
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -151,8 +126,9 @@ Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
       vimAlias = true;
       vimdiffAlias = true;
       extraConfig = ''
+        ${builtins.readFile ./init.vim}
       '';
-*/
+    };
 
     password-store = {
       enable = true;

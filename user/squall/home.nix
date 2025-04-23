@@ -25,10 +25,6 @@ in
     homeDirectory = "/home/${USERNAME}";
     stateVersion = "22.11";
 
-    sessionVariables = {
-      PAGER = "less";
-    };
-
     packages = with pkgs; [
       age
       agenix

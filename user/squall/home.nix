@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, nixgl, ... }:
+{ inputs, outputs, lib, config, pkgs, nixgl, home-manager, ragenix, ... }:
 let
   USERNAME = "squall";
 in

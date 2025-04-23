@@ -5,21 +5,40 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    systems.url = "github:nix-systems/default";
+
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "systems";
+
     nixgl.url   = "github:nix-community/nixGL";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
+    nixgl.inputs.flake-utils.follows = "flake-utils";
 
-    agenix.url = "github:yaxitech/ragenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.systems.follows = "systems";
+    agenix.inputs.home-manager.follows = "home-manager";
+
+    ragenix.url = "github:yaxitech/ragenix";
+    ragenix.inputs.nixpkgs.follows = "nixpkgs";
+    ragenix.inputs.agenix.follows = "agenix";
+    ragenix.inputs.flake-utils.follows = "flake-utils";
+    ragenix.inputs.rust-overlay.follows = "rust-overlay";
+
   };
 
-  outputs = { nixpkgs, nixgl, agenix, home-manager, ... }:
+  outputs = { nixpkgs, systems, flake-utils, nixgl,
+    rust-overlay, home-manager, agenix, ragenix, ... }:
   let # Wil says to put a let block in so we can do all our pre-calculated stuff at the top. TODO clarify
     lib = nixpkgs.lib;
     system = "x86_64-linux"; # TODO explore ways to generalize, at least to arm64
-    overlays = [ agenix.overlays.default ];
+    overlays = [ ragenix.overlays.default ];
 
     pkgs = import nixpkgs {
       inherit system overlays;
@@ -27,7 +46,7 @@
     };
 
     kahua = [
-      agenix.nixosModules.age
+      ragenix.nixosModules.age
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         # ^otherwise pure evaluation fails for flakes

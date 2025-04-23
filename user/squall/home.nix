@@ -101,7 +101,19 @@ in
     starship = {
       enable = true;
       enableInteractive = true;
-      settings = builtins.readFile ./starship.toml;
+      settings = {
+        "$schema" = "https://starship.rs/config-schema.json";
+        add_newline = false;
+        shell = {
+          fish_indicator = "🐟";
+          nu_indicator = "𝜈"; # math italic small nu
+          powershell_indicator = "_";
+          # zsh_indicator = "ℤ"; # double-struck Z
+          zsh_indicator = "𝕫"; # math double-struck small z
+          unknown_indicator = "?";
+          disabled = false;
+        };
+      };
     };
 
   };

@@ -8,6 +8,7 @@ in
     # ./i3 # I've moved this, but not tested yet, since I'm revising hm on Pop!OS
     ./neovim
     ./tmux/tmux.nix
+    ./wezterm
     ./zsh/zsh.nix
   ];
 
@@ -99,15 +100,6 @@ in
 
     starship = {
       enable = true;
-    };
-
-    wezterm = {
-      enable = true;
-      package = config.lib.nixGL.wrap pkgs.wezterm;
-      enableBashIntegration = true;
-      # enableFishIntegration = true;
-      enableZshIntegration = true;
-      # extraConfig = builtins.readFile ./wezterm.lua
     };
 
   };
